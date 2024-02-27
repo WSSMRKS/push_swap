@@ -6,23 +6,56 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/02/27 15:03:10 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/02/27 16:09:21 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <libft/libft.h>
 
-int	ft_parse_several(int argc, char **argv)
+char	*ft_validate_args(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '-')
+		i++;
+	while (str[i] != '\0')
+	{
+		if (str[i] >= '0' && str[i] <= '9')
+			i++;
+		else
+			break;
+	}
+	if (str[i] == '\0')
+		return (str);
+	else
+		return (NULL);
+}
+
+char *ft_validate_str(char *str, int mode)
+{
+	while ((mode <= 2  && str[i] && (str[i] != ' ' || str[i] != '\t' || str[i] != '\v' || str[i] != '\r'
+		|| str[i] != '\n' || str[i] != '\f') || mode > 2 && str[i] != '\0')
+	{
+		if (str[i] >= '0' && str[i] <= '9')
+			i++;
+		else
+			break;
+	}
+	if (mode <= 2 && (str[i] != ' ' || str[i] != '\t' || str[i] != '\v' || str[i] != '\r'
+		|| str[i] != '\n' || str[i] != '\f')
+}
+
+char	*ft_parse_several(int argc, char **argv)
 {
 	int	count;
 	int	*stack_a;
 
-	count = 0;
-	while(count++ < argc - 1)
-		ft_fill_stack(ft_atoargv[count], stack_a);
-
-
+	count = 1;
+	while (count++ <= argc)
+		ft_fill_stack(ft_atol(ft_validate(argv[count])), stack_a[count - 1]);
+	return (stack_a);
 }
 
 int	ft_parse_one (char *input)
