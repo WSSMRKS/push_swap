@@ -1,0 +1,51 @@
+Sorting Algorithms
+Time Complexity: Quadratic time --> O(n^2)
+	Selection Sort
+		selecy the element that would belong next and put it next.
+	Insertion Sort
+		insert the value on the right spot in the array. Good if input mostly sorted
+	Bubble Sort comparing two elements and swapping comparing swopped to next and so on
+	Quick Sort
+		using a pivot and arrange the rest of the values accordingly. pivot from the subarrays pivot again etc. put back together sorted
+Time Complexity: Quasilinear time --> O(n log (n))
+	Merge Sort
+		Devide the array by two by two etc. until arrays of two are left. then compares them, sorts them and merges them back together.
+
+
+Time Complexity: individual O(n+m) n = number of values; m = Range of values --> good for n > m
+	Counting Sort
+		good with input that is repetitive compared to the number of values
+	Bingo Sort Algorithm
+		Bingo Sort Algorithm for repetitive values
+Time Complexity: individual O(d*(n+b)) d = digits n = number of values b = base of the values
+	Radix Sort
+	Sort values by there digits
+		Order sort by digit 1 sort by digit 2 sort by digit 3 aso.....
+Heap Sort
+
+Variations of insertion sort
+	Bucket Sort
+		time complexity O(n^2)
+		10 times insertion sort...
+	ShellSort
+
+
+TimSort
+Comb Sort
+Pigeonhole Sort
+Cycle Sort
+Cocktail Sort
+Strand Sort
+Bitonic Sort
+Pancake sorting
+BogoSort or Permutation Sort
+Gnome Sort
+Sleep Sort - The King of Laziness
+Structure Sorting in C++
+Stooge Sort
+Tag Sort (To get both sorted and original)
+Tree Sort
+Odd-Even Sort / Brick Sort
+3-way Merge Sort
+
+

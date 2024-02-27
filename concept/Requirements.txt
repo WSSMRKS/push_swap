@@ -1,0 +1,24 @@
+General: Program			--> main
+Program name:		push_swap
+Turn in files:		Makefile, *.h, *.c
+libft authorized:	Yes
+Arguments:			stack a: A list of ints
+external functs:	read, write, malloc, free, exit
+					ft_printf (obviously)
+Description:		Sort stacks
+Global vars:		forbidden
+
+Output:				The program must display the lowest number of operations possible to sort the stack.
+Misc:		-	Instructions must be separated by a '\n'
+			-	If no parameters are set: give the prompt back to user.
+			-	Error: Program should display Error followed by a new line --> stderr.
+					Possible Errors:
+						- some Arguments aren't ints,
+						- some arguments are duplicates
+
+
+Bonus:	Create my own checker
+	Input:	List of Arguments, list of opeartions
+	Output:	OK if correct, KO if incorrect, Error if invalid input --> stderr;
+	
+
