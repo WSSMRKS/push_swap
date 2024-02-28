@@ -6,27 +6,74 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/02/28 13:01:01 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/02/28 15:01:22 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <libft/libft.h>
-#include <limits.h>
-#include <stddef.h>
+#include <push_swap.h>
+
+void	ft_free_int(void *data)
+{
+	int	*nbr;
+
+	nbr = data;
+	free(nbr);
+	data = NULL;
+}
+
+// [ ] Work on list functions.
+
+void	ft_lstfree(t_list **lst)
+{
+	void *del;
+	t_list *tmp_l;
+
+	del = &ft_lstfree;
+	tmp_l = lst;
+	while (tmp_l->next != NULL)
+	{
+
+		ft_lstdelone(lst, del);
+
+}
+
+int	ft_sorted(t_list *lst_a)
+{
+	int		value;
+	int		sorted;
+	t_list	*tmp_l;
+
+	tmp_l = lst_a;
+	value = INT_MIN;
+	sorted = 1;
+	while (tmp_l->next != NULL && sorted == 1)
+	{
+		if (value <= tmp_l->content)
+		{
+			sorted = 1;
+			value = tmp_l->content;
+			tmp_l = tmp_l->next;
+		}
+		else
+			sorted = 0;
+	}
+	return (sorted);
+}
 
 void	ft_fill_lst(int *stack_a, int size)
 {
-	t_list	**lst_a;
+	t_list	*lst_a;
 	int		i;
 
-	while(stack_a[i])
+	i = 0;
+	lst_a = ft_lstnew(stack_a[i++]);
+	while (stack_a[i])
+		ft_lstadd_back(&lst_a, ft_lstnew(stack_a[i++]));
+	if (ft_sorted(lst_a))
 	{
-		ft_lstadd_front(lst_a, ft_lstnew(stack_a[i++]));
+
+		exit(3);
 	}
-	ft_init_ll(stack_a, size);
-	ft_sort()
 }
 
 void	ft_switch(int *stack_a, int size, char purpose)
@@ -98,7 +145,7 @@ char	*ft_parse_several(int argc, char **argv)
 			return (NULL);
 		}
 	}
-	return (stack_a);1
+	return (stack_a);
 }
 
 char	*ft_parse_one(char *input, int *size)

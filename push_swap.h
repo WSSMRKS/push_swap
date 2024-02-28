@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:20:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/02/27 15:02:23 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/02/28 14:45:19 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 // # include <limits.h>
 # include <stdlib.h>
 # include <libft/libft.h>
+# include <stdio.h>
+# include <limits.h>
+# include <stddef.h>
 
 
 #endif
