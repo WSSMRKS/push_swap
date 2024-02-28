@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/02/28 11:17:23 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/02/28 13:01:01 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,27 @@
 #include <libft/libft.h>
 #include <limits.h>
 #include <stddef.h>
+
+void	ft_fill_lst(int *stack_a, int size)
+{
+	t_list	**lst_a;
+	int		i;
+
+	while(stack_a[i])
+	{
+		ft_lstadd_front(lst_a, ft_lstnew(stack_a[i++]));
+	}
+	ft_init_ll(stack_a, size);
+	ft_sort()
+}
+
+void	ft_switch(int *stack_a, int size, char purpose)
+{
+	if (purpose == 's')
+		ft_solve(stack_a, size);
+	else if (purpose == 'c')
+		ft_check(stack_a, size);
+}
 
 static void	ft_free(char **tofree)
 {
@@ -51,7 +72,8 @@ int	ft_validate_args(char *str, int *valid)
 		else
 			break ;
 	}
-	if (str[i] == '\0' && i <= 11 && ((nbr = ft_atol(str))) >= -2147483648
+	nbr = ft_atol(str);
+	if (str[i] == '\0' && i <= 11 && nbr >= -2147483648
 		&& nbr <= 2147483647)
 		return ((int) nbr);
 	else
@@ -61,49 +83,36 @@ int	ft_validate_args(char *str, int *valid)
 
 char	*ft_parse_several(int argc, char **argv)
 {
-	int			count;
+	int			i;
 	int			*stack_a;
-	short int	a;
+	int			valid;
 
-	count = 1;
-	while (count++ <= argc)
-		ft_fill_stack(ft_atol(ft_validate_args(argv[count])),
-			stack_a[count - 1]);
-	return (stack_a);
-}
-
-char	*ft_validate_str(char *str, int mode)
-{
-	int	i;
-
-	while (str[i] && (str[i] != ' ' || str[i] != '\t' || str[i] != '\v'
-			|| str[i] != '\r' || str[i] != '\n' || str[i] != '\f'))
+	stack_a = (int *) malloc(sizeof(int) * (argc - 1));
+	i = 0;
+	while (i <= (argc - 1))
 	{
-		if (str[i] >= '0' && str[i] <= '9')
-			i++;
-		else
-			break ;
+		stack_a[i++] = ft_atol(ft_validate_args(argv[i + 1], &valid)); // [ ] check if syntax is right (++)
+		if (valid != 1)
+		{
+			free(stack_a);
+			return (NULL);
+		}
 	}
-	if (str[i] == ' ' || str[i] == '\t' || str[i] == '\v' || str[i] == '\r'
-		|| str[i] == '\n' || str[i] == '\f' || str[i] == '\0')
-		return (str);
-	else
-		return (NULL);
+	return (stack_a);1
 }
 
-int	ft_parse_one(char *input)
+char	*ft_parse_one(char *input, int *size)
 {
 	char	**split;
 	int		*stack_a;
 	int		i;
-	long	nbr;
 	int		valid;
 
 	i = ft_countwords(input, ' ');
 	stack_a = (int *) malloc(sizeof(int) * i);
 	split = ft_split(*input, ' ');
 	if (!split)
-		return (0);
+		return (NULL);
 	i = 0;
 	while (split[i])
 	{
@@ -111,24 +120,41 @@ int	ft_parse_one(char *input)
 		if (valid != 1)
 		{
 			ft_free(split);
-			return (0);
+			free(stack_a);
+			return (NULL);
 		}
-		free(split[i]);
-		i++;
+		free(split[i++]);
 	}
 	free(split);
+	*size = i; // [ ] validate right size from i
+	return (stack_a);
 }
 
 int	main(int argc, char **argv)
 {
+	int		*stack_a;
+	int		size;
+	char	purpose;
+	int		success;
+
+	purpose = 's'; // [ ] s = solve; c = check;
 	if (argc < 2)
 	{
 		write(2, "ERROR\n", 6);
 		exit(1);
 	}
-	if (argc == 2)
-		ft_parse_one(argv[1]);
-	if (argc > 2)
-		ft_parse_several(argc, **argv);
+	else if (argc == 2)
+		stack_a = ft_parse_one(argv[1], &size);
+	else
+	{
+		stack_a = ft_parse_several(argc, **argv);
+		size = argc - 1;
+	}
+	if (!stack_a)
+	{
+		write(2, "ERROR\n", 6);
+		exit(2);
+	}
+	ft_switch(stack_a, size, purpose);
 	return (1);
 }
