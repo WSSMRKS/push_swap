@@ -6,12 +6,24 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:20:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/02/29 11:05:34 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/02/29 15:12:52 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
+# ifdef SOLVER
+#  define PURPOSE_PS 1
+# endif
+# ifdef CHECKER
+#  define PURPOSE_PS 2
+# endif
+# ifndef PURPOSE_PS
+#  define PURPOSE_PS 1
+
+# endif
+
+
 // # include <stdarg.h>
 // # include <stdlib.h>
 // # include <unistd.h>
@@ -25,6 +37,8 @@
 # include <stdio.h>
 # include <limits.h>
 # include <stddef.h>
+
+
 
 
 #endif

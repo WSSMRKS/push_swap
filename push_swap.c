@@ -6,11 +6,27 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/02/29 13:01:26 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/02/29 15:22:12 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+static void	ft_free(void **tofree)
+{
+	int	i;
+
+	if (!tofree)
+		return ;
+	i = 0;
+	while (tofree[i])
+	{
+		free((void *)tofree[i]);
+		i++;
+	}
+	free((void *)tofree);
+	return ;
+}
 
 void	ft_lstfree(t_list **lst)
 {
@@ -73,31 +89,33 @@ void	ft_solve(int **stack_a, int *size)
 	t_list	*lst_a;
 
 	lst_a = ft_fill_lst(stack_a, size);
+	write(2, "Solving algorithm not in place yet!\n", 36);
+	ft_free((void **)stack_a);
+	exit(1);
+	// [ ] Work on solving
+	// [ ] get printing running
 }
 
-void	ft_switch(int **stack_a, char purpose, int *size)
+void	ft_switch(int **stack_a, int *size)
 {
-	if (purpose == 's')
+	char	purpose;
+
+	purpose = PURPOSE_PS;
+	if (purpose == 1)
 		ft_solve(stack_a, size);
-	else if (purpose == 'c')
-		exit(1);
-	//ft_check(stack_a);
-}
-
-static void	ft_free(void **tofree)
-{
-	int	i;
-
-	if (!tofree)
-		return ;
-	i = 0;
-	while (tofree[i])
+	else if (purpose == 2)
 	{
-		free((void *)tofree[i]);
-		i++;
+		write(2, "Checker not implemented yet!\n", 29);
+		ft_free((void **)stack_a);
+		exit(1);
 	}
-	free((void *)tofree);
-	return ;
+	else
+	{
+		write(2, "Invalid Value for \"PURPOSE_PS\"!\n", 32);
+		ft_free((void **)stack_a);
+		exit(1);
+	}
+	//ft_check(stack_a);
 }
 
 int	ft_validate_args(char *str, int *valid)
@@ -138,15 +156,18 @@ int	**ft_parse_several(int argc, char **argv)
 	int			valid;
 
 	stack_a = malloc(sizeof(int *) * (argc));
+	if (!stack_a)
+		return (NULL);
 	i = 0;
-	while (i <= (argc - 1))
+	stack_a[argc - 1] = NULL;
+	while (i < (argc - 1))
 	{
 		stack_a[i] = malloc(sizeof(int));
 		*stack_a[i] = ft_validate_args(argv[i + 1], &valid); // [ ] check if syntax is right (++)
 		i++;
 		if (valid != 1)
 		{
-			free(stack_a);
+			ft_free((void **)stack_a);
 			return (NULL);
 		}
 	}
@@ -161,7 +182,9 @@ int	**ft_parse_one(char *input, int *size)
 	int		valid;
 
 	i = ft_countwords(input, ' ');
-	stack_a = malloc(sizeof(int *) * i + 1);
+	stack_a = malloc(sizeof(int *) * (i + 1));
+	if (!stack_a)
+		return (NULL);
 	split = ft_split(input, ' ');
 	if (!split)
 		return (NULL);
@@ -188,9 +211,7 @@ int	main(int argc, char **argv)
 {
 	int		**stack_a;
 	int		size;
-	char	purpose;
 
-	purpose = 's'; // [ ] s = solve; c = check;
 	if (argc < 2)
 	{
 		write(2, "ERROR\n", 6);
@@ -208,6 +229,6 @@ int	main(int argc, char **argv)
 		write(2, "ERROR\n", 6);
 		exit(2);
 	}
-	ft_switch(stack_a, purpose, &size);
+	ft_switch(stack_a, &size);
 	return (1);
 }
