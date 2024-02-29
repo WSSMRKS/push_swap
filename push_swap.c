@@ -6,35 +6,24 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/02/28 15:01:22 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/02/29 11:08:29 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <push_swap.h>
-
-void	ft_free_int(void *data)
-{
-	int	*nbr;
-
-	nbr = data;
-	free(nbr);
-	data = NULL;
-}
-
-// [ ] Work on list functions.
+#include "push_swap.h"
 
 void	ft_lstfree(t_list **lst)
 {
-	void *del;
-	t_list *tmp_l;
+	void	*del;
+	t_list	**tmp_l;
 
-	del = &ft_lstfree;
+	del = &free;
 	tmp_l = lst;
 	while (tmp_l->next != NULL)
 	{
-
-		ft_lstdelone(lst, del);
-
+		ft_lstclear(lst, del);
+		tmp_l = tmp_l->next;
+	}
 }
 
 int	ft_sorted(t_list *lst_a)
@@ -66,12 +55,12 @@ void	ft_fill_lst(int *stack_a, int size)
 	int		i;
 
 	i = 0;
-	lst_a = ft_lstnew(stack_a[i++]);
+	lst_a = ft_lstnew(&stack_a[i++]);
 	while (stack_a[i])
 		ft_lstadd_back(&lst_a, ft_lstnew(stack_a[i++]));
 	if (ft_sorted(lst_a))
 	{
-
+		ft_lstfree(lst_a);
 		exit(3);
 	}
 }
