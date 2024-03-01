@@ -5,12 +5,12 @@ Time Complexity: Quadratic time --> O(n^2)
 	Insertion Sort
 		insert the value on the right spot in the array. Good if input mostly sorted
 	Bubble Sort comparing two elements and swapping comparing swopped to next and so on
-	Quick Sort
-		using a pivot and arrange the rest of the values accordingly. pivot from the subarrays pivot again etc. put back together sorted
+
 Time Complexity: Quasilinear time --> O(n log (n))
 	Merge Sort
 		Devide the array by two by two etc. until arrays of two are left. then compares them, sorts them and merges them back together.
-
+	Quick Sort -> choosing median as pivot
+		using a pivot and arrange the rest of the values accordingly. pivot from the subarrays pivot again etc. put back together sorted
 
 Time Complexity: individual O(n+m) n = number of values; m = Range of values --> good for n > m
 	Counting Sort

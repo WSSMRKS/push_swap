@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/02/29 15:22:12 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/01 19:29:06 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,35 +36,38 @@ void	ft_lstfree(t_list **lst)
 	ft_lstclear(lst, del);
 }
 
-int	ft_sorted(t_list *lst_a)
+int	ft_dup_sorted(t_list *lst_a)
 {
 	int		value;
-	int		sorted;
+	int		ret;
 	t_list	*tmp_l;
+	t_list	*tmp_b;
 
+	ret = 1;
 	tmp_l = lst_a;
 	value = INT_MIN;
-	sorted = 1;
-	while (sorted == 1)
+	while (tmp_l)
 	{
-		if (value <= *(int *)tmp_l->content)
+		tmp_b = tmp_l->next;
+		if (value > *(int *)tmp_l->content && ret != -1)
+			ret = 0; // [ ] might be feasable to check how many are sorted.
+		value = *(int *)tmp_l->content;
+		while (tmp_b)
 		{
-			sorted = 1;
-			value = *(int *)tmp_l->content;
-			if (tmp_l->next == NULL)
-				break ;
-			tmp_l = tmp_l->next;
+			if (*(int *)tmp_l->content == *(int *)tmp_b->content)
+				return (-1);
+			tmp_b = tmp_b->next;
 		}
-		else
-			sorted = 0;
+		tmp_l = tmp_l->next;
 	}
-	return (sorted);
+	return (ret);
 }
 
 t_list	*ft_fill_lst(int **stack_a, int *size)
 {
 	t_list	*lst_a;
 	int		i;
+	int		sor_dup;
 
 	i = 0;
 	lst_a = ft_lstnew(stack_a[i]);
@@ -74,8 +77,11 @@ t_list	*ft_fill_lst(int **stack_a, int *size)
 		ft_lstadd_back(&lst_a, ft_lstnew(stack_a[i]));
 		stack_a[i++] = NULL;
 	}
-	if (ft_sorted(lst_a))
+	sor_dup = ft_dup_sorted(lst_a);
+	if (sor_dup != 0)
 	{
+		if (sor_dup == -1)
+			ft_putstr_fd("ERROR\n", 2);
 		ft_lstfree(&lst_a);
 		free(stack_a);
 		exit(3);
@@ -214,7 +220,7 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 	{
-		write(2, "ERROR\n", 6);
+		ft_putstr_fd("ERROR\n", 2);
 		exit(1);
 	}
 	else if (argc == 2)
@@ -226,7 +232,7 @@ int	main(int argc, char **argv)
 	}
 	if (!stack_a)
 	{
-		write(2, "ERROR\n", 6);
+		ft_putstr_fd("ERROR\n", 2);
 		exit(2);
 	}
 	ft_switch(stack_a, &size);
