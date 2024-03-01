@@ -4,10 +4,8 @@ comiling:
 cc -g3 -Werror -Wall -Wextra push_swap.c libft/ft_lstclear.c libft/ft_lstnew.c libft/ft_lstadd_back.c libft/ft_countwords.c libft/ft_atol.c libft/ft_lstdelone.c libft/ft_split.c
 
 SOLVER
-cc -g3 -Werror -Wall -Wextra -D SOLVER push_swap.c libft/ft_lstclear.c libft/ft_lstnew.c libft/ft_lstadd_back.c libft/ft_countwords.c libft/ft_atol.c libft/ft_lstdelone.c libft/ft_split.c 
-libft/ft_putstr_fd.c 
+cc -g3 -Werror -Wall -Wextra -D SOLVER push_swap.c push_swap_utlis.c libft/ft_lstclear.c libft/ft_lstnew.c libft/ft_lstadd_back.c libft/ft_countwords.c libft/ft_atol.c libft/ft_lstdelone.c libft/ft_split.c libft/ft_putstr_fd.c libft/ft_lstlast.c libft/ft_lstadd_front.c
 
 CHECKER
-cc -g3 -Werror -Wall -Wextra -D CHECKER push_swap.c libft/ft_lstclear.c libft/ft_lstnew.c libft/ft_lstadd_back.c libft/ft_countwords.c libft/ft_atol.c libft/ft_lstdelone.c libft/ft_split.c 
-libft/ft_putstr_fd.c 
+cc -g3 -Werror -Wall -Wextra -D CHECKER push_swap.c push_swap_utlis.c libft/ft_lstclear.c libft/ft_lstnew.c libft/ft_lstadd_back.c libft/ft_countwords.c libft/ft_atol.c libft/ft_lstdelone.c libft/ft_split.c libft/ft_putstr_fd.c libft/ft_lstlast.c libft/ft_lstadd_front.c
 
