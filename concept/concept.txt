@@ -4,10 +4,10 @@ Running program
 
 
 TODO:
-[ ]	Requirements of the program
-[ ]	Find out smart sorting algorithms
+[x]	Requirements of the program
+[x]	Find out smart sorting algorithms
 [ ]	Think of mathematical syntax
-[ ]	create the environment (Main, necessitys)
+[x]	create the environment (Main, necessitys)
 
 
 Push Swap:

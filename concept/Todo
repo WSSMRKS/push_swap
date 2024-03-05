@@ -1,5 +1,5 @@
-# [ ] Update libft by gnl and printf
 # [ ] optimize gnl
+# [ ] Update libft with gnl and printf
 # [ ] Write checker
 		# get_next_line
 		# strcmp
