@@ -1,0 +1,12 @@
+# [ ] Update libft by gnl and printf
+# [ ] optimize gnl
+# [ ] Write checker
+		# get_next_line
+		# strcmp
+		# stackfunctions
+		# sorted
+		# printf OK;
+# [ ] write Tester
+# [ ] optimize Makefile
+# [ ] optimize valgrind
+# [ ] write sorting algorithms
