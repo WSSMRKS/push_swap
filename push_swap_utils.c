@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils_d.c                                :+:      :+:    :+:   */
+/*   push_swap_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:19:56 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/05 14:46:11 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/08 18:01:26 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,77 @@ t_list	*ft_fill_lst(int **stack_a, int *size)
 		return (lst_a);
 }
 
-void	ft_switch(int **stack_a, int *size)
+void	ft_free(void **tofree, int index)
 {
-	char	purpose;
+	int	i;
 
-	purpose = PURPOSE_PS;
-	if (purpose == 1)
-		ft_solve(stack_a, size);
-	else if (purpose == 2)
+	if (!tofree)
+		return ;
+	i = 0;
+	if (index != 0)
 	{
-		write(2, "Checker not implemented yet!\n", 29);
-		ft_free((void **)stack_a, 0);
-		exit(1);
+		while (i <= index)
+		{
+			free((void *)tofree[i]);
+			i++;
+		}
 	}
 	else
 	{
-		write(2, "Invalid Value for \"PURPOSE_PS\"!\n", 32);
-		ft_free((void **)stack_a, 0);
-		exit(1);
+		while (tofree[i])
+		{
+			free((void *)tofree[i]);
+			i++;
+		}
 	}
+	free((void *)tofree);
+	return ;
+}
+
+int	ft_dup_sorted(t_list *lst_a)
+{
+	int		value;
+	int		ret;
+	t_list	*tmp_a;
+	t_list	*tmp_b;
+
+	ret = 1;
+	tmp_a = lst_a;
+	value = INT_MIN;
+	while (tmp_a)
+	{
+		tmp_b = tmp_a->next;
+		if (value > *(int *)tmp_a->content && ret != -1)
+			ret = 0;
+		value = *(int *)tmp_a->content;
+		while (tmp_b)
+		{
+			if (*(int *)tmp_a->content == *(int *)tmp_b->content)
+				return (-1);
+			tmp_b = tmp_b->next;
+		}
+		tmp_a = tmp_a->next;
+	}
+	return (ret);
+}
+
+int	ft_sorted(t_list *lst_a)
+{
+	long	value;
+	int		ret;
+	t_list	*tmp_a;
+	t_list	*tmp_b;
+
+	ret = 0;
+	tmp_a = lst_a;
+	value = -1 - INT_MIN;
+	while (tmp_a)
+	{
+		tmp_b = tmp_a->next;
+		if (value < *(long *)tmp_a->content && ret != -1)
+			ret++;
+		value = *(long *)tmp_a->content;
+		tmp_a = tmp_a->next;
+	}
+	return (ret);
 }

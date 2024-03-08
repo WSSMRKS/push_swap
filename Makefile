@@ -5,6 +5,7 @@ OBJDIR =
 LIBFTDIR = libft/
 # Names #
 NAME = push_swap
+BONUS_NAME= checker
 # MAIN_NAME = push_swap
 # Compiler & COptions & CFlags #
 CFLAGS = -g -Werror -Wall -Wextra
@@ -12,10 +13,11 @@ TESTFLAGS = -g3
 COPTIONS = -c
 CC = cc
 # Source Files #
-SRC =			push_swap.c			push_swap_utils_a.c		push_swap_utils_b.c		push_swap_utils_c.c		push_swap_utils_d.c \
+SRC =			push_swap.c			push_swap_utils.c		push_swap_lst_fncts_1.c	push_swap_lst_fncts_2.c	push_swap_lst_fncts_3.c \
 				push_swap_solve.c	push_swap_solve_utils.c
 MAIN_SRC =
-BONUS_SRC =
+BONUS_SRC =		push_swap.c			push_swap_utils.c		push_swap_lst_fncts_1.c	push_swap_lst_fncts_2.c	push_swap_lst_fncts_3.c \
+				push_swap_bonus.c
 TEST_SRC = test.sh
 HEADERS = push_swap.h libft.h
 LIBFT_SRC = libft.a
@@ -30,10 +32,10 @@ TEST_OBJ = $(TEST_SRC:.c=.o)
 all : $(NAME)
 
 $(NAME): libft $(SRC_OBJ)
-	$(CC) $(CFLAGS) -D SOLVER $(SRC_OBJ) $(LIBFT_SRC) -o $(NAME)
+	$(CC) $(CFLAGS) $(SRC_OBJ) $(LIBFT_SRC) -o $(NAME)
 
-# bonus: $(BONUS_OBJ) $(SRC_OBJ)
-# 	ar rcs $(NAME) $(SRC_OBJ) $(BONUS_OBJ)
+bonus: libft $(BONUS_OBJ)
+	$(CC) $(CFLAGS) $(BONUS_OBJ) $(LIBFT_SRC) -o $(BONUS_NAME)
 
 libft:
   ifeq ("$(wildcard $(LIBFTDIR))", "")
@@ -80,7 +82,7 @@ clean:
 	@rm -f libft.h
 
 fclean: clean
-	@rm -f $(NAME) $(MAIN_NAME)
+	@rm -f $(NAME) $(MAIN_NAME) $(BONUS_NAME)
 	@echo "\"$(NAME)\" deleted"
 
 re: fclean all

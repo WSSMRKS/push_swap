@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:19:56 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/05 15:19:11 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/08 17:47:14 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,33 +46,6 @@ void	ft_rrr(t_list *lst_a, t_list *lst_b, int silent)
 	ft_rrb(lst_b, 1);
 	if (silent != 1)
 		ft_putstr_fd("rrr\n", 1);
-}
-
-void	ft_free(void **tofree, int index)
-{
-	int	i;
-
-	if (!tofree)
-		return ;
-	i = 0;
-	if (index != 0)
-	{
-		while (i <= index)
-		{
-			free((void *)tofree[i]);
-			i++;
-		}
-	}
-	else
-	{
-		while (tofree[i])
-		{
-			free((void *)tofree[i]);
-			i++;
-		}
-	}
-	free((void *)tofree);
-	return ;
 }
 
 void	ft_lstfree(t_list **lst)

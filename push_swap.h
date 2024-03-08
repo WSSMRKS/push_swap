@@ -6,25 +6,15 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:20:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/08 15:58:47 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/08 17:56:20 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
-# ifdef SOLVER
-#  define PURPOSE_PS 1
-# endif
-# ifdef CHECKER
-#  define PURPOSE_PS 2
-# endif
-# ifndef PURPOSE_PS
-#  define PURPOSE_PS 1
-
-# endif
 # include <unistd.h>
 # include <stdlib.h>
-# include "42_libft/libft.h"
+# include "libft/libft.h"
 # include <stdio.h>
 # include <limits.h>
 # include <stddef.h>
