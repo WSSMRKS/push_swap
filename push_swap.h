@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:20:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/05 16:01:39 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/08 15:58:47 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # endif
 # include <unistd.h>
 # include <stdlib.h>
-# include "libft/libft.h"
+# include "42_libft/libft.h"
 # include <stdio.h>
 # include <limits.h>
 # include <stddef.h>
