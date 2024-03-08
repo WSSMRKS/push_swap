@@ -1,12 +1,12 @@
-# [ ] optimize gnl
-# [ ] Update libft with gnl and printf
+# [x] optimize gnl
+# [x] Update libft with gnl and printf
 # [ ] Write checker
 		# get_next_line
 		# strcmp
 		# stackfunctions
 		# sorted
 		# printf OK;
-# [ ] write Tester
+# [ ] write Tester		https://ioflood.com/blog/bash-random-number/#Generating_Random_Numbers_Within_a_Specific_Range
 # [ ] optimize Makefile
 # [ ] optimize valgrind
 # [ ] write sorting algorithms
