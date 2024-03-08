@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/05 16:01:24 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/08 21:32:24 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ft_solve(int **stack_a, int *size)
 	else
 		ft_solve_big(lst_a, lst_b, size);
 	ft_lstfree(&lst_a);
+	ft_lstfree(&lst_b);
 	ft_free((void **)stack_a, 0);
 	exit(1);
 }

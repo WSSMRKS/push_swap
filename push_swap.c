@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/05 16:03:04 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/08 21:37:02 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 	{
-		ft_putstr_fd("ERROR\n", 2);
+		ft_printf("ERROR\n");
 		exit(1);
 	}
 	else if (argc == 2)
