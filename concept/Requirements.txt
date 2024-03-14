@@ -20,5 +20,23 @@ Misc:		-	Instructions must be separated by a '\n'
 Bonus:	Create my own checker
 	Input:	List of Arguments, list of opeartions
 	Output:	OK if correct, KO if incorrect, Error if invalid input --> stderr;
-	
 
+
+Performance
+3 values: max 2 or 3
+
+5 values: max 12 best 8
+
+100 values:
+100 values less then 700  --> 5
+100 values less then 900  --> 4
+100 values less then 1100 --> 3
+100 values less then 1300 --> 2
+100 values less then 1500 --> 1
+
+500 values:
+500 values less then  5500 --> 5
+500 values less then  7000 --> 4
+500 values less then  8500 --> 3
+500 values less then 10000 --> 2
+500 values less then 11500 --> 1
