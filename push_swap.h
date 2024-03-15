@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:20:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/15 12:57:28 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/15 17:17:48 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_cont
 	int	index;
 	int	pivot;
 	int	distance;
+	int	chunk;
 }			t_cont;
 
 typedef struct s_list
@@ -53,9 +54,13 @@ void		ft_solve(int **stack_a, int *size);
 void		ft_solve_3(t_list **lst_a);
 void		ft_solve_5(t_list **lst_a, t_list **lst_b, int *size);
 void		ft_solve_10(t_list **lst_a, t_list **lst_b, int *size);
-void		ft_solve_big(t_list **lst_a, t_list **lst_b, int *size);
+void		ft_solve_big(t_list **lst_a, t_list **lst_b, int *size, int chunks);
 void		ft_switch(int **stack_a, int *size);
 t_cont		*ft_create_cont(int *val);
+void		ft_calc_index(t_list **lst_a, int size);
+void		ft_assign_chunk(t_list **lst_a, int size, int chunks);
+int			ft_chunks(int size);
+int			ft_find_closest(t_list **lst, int chunk, int size);
 // libft content:
 int			ft_atoi(const char *nptr);
 long		ft_atol(const char *nptr);

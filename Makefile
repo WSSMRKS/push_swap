@@ -48,6 +48,8 @@ libft:
 	@cp -rf libft/libft.a ./
   endif
 
+ex: $(NAME) clean
+
 test: $(NAME)
 	@$(CC) $(TESTFLAGS) $(MAIN_SRC) $(SRC) $(TEST_SRC) -o $(MAIN_NAME)
 	@echo "test command sucessfully executed. Executable is called \"$(MAIN_NAME)\"!"
