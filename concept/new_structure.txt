@@ -11,9 +11,9 @@ stack_a pivot
 stack_a
 
 
-stack_a[i] =	t_content.value
-				t_content.index
-				t_content.price
+stack_a[i] =	t_cont.value
+				t_cont.index
+				t_cont.price
 
 
 struct_a.value[]

@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:19:56 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/14 13:17:18 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/15 12:44:27 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ t_list	*ft_fill_lst(int **stack_a, int *size)
 	int		sor_dup;
 
 	i = 0;
-	lst_a = ft_lstnew(ft_create_content(stack_a[i++]));
+	lst_a = ft_lstnew(ft_create_cont(stack_a[i++]));
 	while (i < *size)
-		ft_lstadd_back(&lst_a, ft_lstnew(ft_create_content(stack_a[i++])));
+		ft_lstadd_back(&lst_a, ft_lstnew(ft_create_cont(stack_a[i++])));
 	sor_dup = ft_dup_sorted(lst_a);
 	if (sor_dup != 0)
 	{
@@ -35,11 +35,11 @@ t_list	*ft_fill_lst(int **stack_a, int *size)
 		return (lst_a);
 }
 
-t_content	*ft_create_content(int *val)
+t_cont	*ft_create_cont(int *val)
 {
-	t_content	*l_obj;
+	t_cont	*l_obj;
 
-	l_obj = malloc(sizeof(t_content));
+	l_obj = malloc(sizeof(t_cont));
 	l_obj->value = *val;
 	return (l_obj);
 }
@@ -75,28 +75,25 @@ int	ft_dup_sorted(t_list *lst_a)
 {
 	int			value;
 	int			ret;
-	t_content	*tmp_a;
-	t_content	*tmp_b;
-	t_list		*tmp_l;
+	t_list		*tmp_a;
+	t_list		*tmp_b;
 
 	ret = 1;
-	tmp_a = lst_a->content;
+	tmp_a = lst_a;
 	value = INT_MIN;
-	while (lst_a)
+	while (tmp_a)
 	{
-		tmp_a = lst_a->content;
-		if (value > tmp_a->value && ret != -1)
+		if (value > tmp_a->cont->value && ret != -1)
 			ret = 0;
-		value = tmp_a->value;
-		tmp_l = lst_a->next;
-		while (tmp_l)
+		value = tmp_a->cont->value;
+		tmp_b = tmp_a->next;
+		while (tmp_b)
 		{
-			tmp_b = tmp_l->content;
-			if (tmp_a->value == tmp_b->value)
+			if (tmp_a->cont->value == tmp_b->cont->value)
 				return (-1);
-			tmp_l = tmp_l->next;
+			tmp_b = tmp_b->next;
 		}
-		lst_a = lst_a->next;
+		tmp_a = tmp_a->next;
 	}
 	return (ret);
 }
@@ -114,9 +111,9 @@ int	ft_dup_sorted(t_list *lst_a)
 // 	while (tmp_a)
 // 	{
 // 		tmp_b = tmp_a->next;
-// 		if (value < *(long *)tmp_a->content && ret != -1)
+// 		if (value < *(long *)tmp_a->cont && ret != -1)
 // 			ret++;
-// 		value = *(long *)tmp_a->content;
+// 		value = *(long *)tmp_a->cont;
 // 		tmp_a = tmp_a->next;
 // 	}
 // 	return (ret);

@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/14 14:36:20 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/15 12:29:52 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,39 +34,40 @@ void	ft_solve(int **stack_a, int *size)
 	ft_free((void *)stack_a, 0);
 }
 
-void ft_solve_3(t_list **lst_a) {
-    t_content *current_content = (t_content *)(*lst_a)->content;
-    t_content *next_content = (t_content *)(*lst_a)->next->content;
-    t_content *next_next_content = (t_content *)(*lst_a)->next->next->content;
-
-    if (current_content->value < next_content->value &&
-        next_content->value > next_next_content->value) {
-        if (current_content->value < next_next_content->value) {
-            ft_sa(lst_a, 0);
-            ft_ra(lst_a, 0);
-        } else {
-            ft_rra(lst_a, 0);
-        }
-    } else if (current_content->value > next_content->value &&
-               next_content->value < next_next_content->value) {
-        if (current_content->value < next_next_content->value) {
-            ft_sa(lst_a, 0);
-        } else {
-            ft_ra(lst_a, 0);
-        }
-    } else {
-        ft_sa(lst_a, 0);
-        ft_rra(lst_a, 0);
-    }
-    return;
+void	ft_solve_3(t_list **lst_a)
+{
+	if ((*lst_a)->cont->value < (*lst_a)->next->cont->value
+		&& (*lst_a)->next->cont->value > (*lst_a)->next->next->cont->value)
+	{
+		if ((*lst_a)->cont->value < (*lst_a)->next->next->cont->value)
+		{
+			ft_sa(lst_a, 0);
+			ft_ra(lst_a, 0);
+		}
+		else
+			ft_rra(lst_a, 0);
+	}
+	else if ((*lst_a)->cont->value > (*lst_a)->next ->cont->value
+		&& (*lst_a)->next->cont->value < (*lst_a)->next->next->cont->value)
+	{
+		if ((*lst_a)->cont->value < (*lst_a)->next->next->cont->value)
+			ft_sa(lst_a, 0);
+		else
+			ft_ra(lst_a, 0);
+	}
+	else
+	{
+		ft_sa(lst_a, 0);
+		ft_rra(lst_a, 0);
+	}
 }
 
 // void	ft_solve_3(t_list **lst_a)
 // {
-// 	if (*(int)(*lst_a)->content->value < *(int)(*lst_a)->next->content->value
-// 		&& *(int *)(*lst_a)->next->content > *(int *)(*lst_a)->next->next->content)
+// 	if (*(int)(*lst_a)->cont->value < *(int)(*lst_a)->next->cont->value
+// 		&& *(int *)(*lst_a)->next->cont > *(int *)(*lst_a)->next->next->cont)
 // 	{
-// 		if (*(int *)(*lst_a)->content < *(int *)(*lst_a)->next->next->content)
+// 		if (*(int *)(*lst_a)->cont < *(int *)(*lst_a)->next->next->cont)
 // 		{
 // 			ft_sa(lst_a, 0);
 // 			ft_ra(lst_a, 0);
@@ -74,10 +75,10 @@ void ft_solve_3(t_list **lst_a) {
 // 		else
 // 			ft_rra(lst_a, 0);
 // 	}
-// 	else if (*(int *)(*lst_a)->content > *(int *)(*lst_a)->next->content
-// 		&& *(int *)(*lst_a)->next->content < *(int *)(*lst_a)->next->next->content)
+// 	else if (*(int *)(*lst_a)->cont > *(int *)(*lst_a)->next->cont
+// 		&& *(int *)(*lst_a)->next->cont < *(int *)(*lst_a)->next->next->cont)
 // 	{
-// 		if (*(int *)(*lst_a)->content < *(int *)(*lst_a)->next->next->content)
+// 		if (*(int *)(*lst_a)->cont < *(int *)(*lst_a)->next->next->cont)
 // 			ft_sa(lst_a, 0);
 // 		else
 // 			ft_ra(lst_a, 0);
