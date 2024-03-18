@@ -28,6 +28,9 @@ BONUS_OBJ = $(BONUS_SRC:.c=.o)
 MAIN_OBJ = $(MAIN_SRC:.c=.o)
 TEST_OBJ = $(TEST_SRC:.c=.o)
 
+# push_swap_visualizer #
+VISDIR = push_swap_visualizer/
+
 # Targets #
 all : $(NAME)
 
@@ -49,6 +52,31 @@ libft:
   endif
 
 ex: $(NAME) clean
+
+visualizer:
+  ifeq ("$(wildcard $(VISDIR))", "")
+	@echo "visualizer not yet available"
+	git clone https://github.com/o-reo/push_swap_visualizer.git
+#	sudo apt-get update
+#	sudo apt-get install cmake
+#	sudo apt-get install g++
+#	sudo apt-get install clang
+#	sudo apt-get install libgl1-mesa-dev libglu1-mesa-dev
+#	sudo apt-get install libx11-dev libxrandr-dev
+#	sudo apt-get install libudev-dev
+#	sudo apt-get install libfreetype-dev
+	cd push_swap_visualizer
+	mkdir build
+	cd build
+	cmake ..
+	make
+	cd ../..
+	./push_swap_visualizer/build/visualizer
+  else
+	@echo "visualizer already available"
+	./push_swap_visualizer/build/bin/visualizer
+  endif
+
 
 test: $(NAME)
 	@$(CC) $(TESTFLAGS) $(MAIN_SRC) $(SRC) $(TEST_SRC) -o $(MAIN_NAME)

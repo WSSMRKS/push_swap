@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_solve_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: wssmrks <wssmrks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/15 17:55:55 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/18 19:36:40 by wssmrks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,20 @@ void	ft_calc_index(t_list **lst_a, int size)
 
 void	ft_assign_chunk(t_list **lst_a, int size, int chunks)
 {
-	if ((size / chunks) > (*lst_a)->cont->index)
+	if (((float)size / chunks) > (*lst_a)->cont->index)
 		(*lst_a)->cont->chunk = 0;
-	if ((size / chunks) < (*lst_a)->cont->index)
-		(*lst_a)->cont->chunk = ((*lst_a)->cont->index / (size / chunks));
+	if (((float)size / chunks) < (*lst_a)->cont->index)
+		(*lst_a)->cont->chunk = 1;
+	if (((float)size / chunks) * 2 < (*lst_a)->cont->index)
+		(*lst_a)->cont->chunk = 2;
+	if (((float)size / chunks) * 3 < (*lst_a)->cont->index)
+		(*lst_a)->cont->chunk = 3;
+	if (((float)size / chunks) * 4 < (*lst_a)->cont->index)
+		(*lst_a)->cont->chunk = 4;
+	if (((float)size / chunks) * 5 < (*lst_a)->cont->index)
+		(*lst_a)->cont->chunk = 5;
+	if (((float)size / chunks) * 6 < (*lst_a)->cont->index)
+		(*lst_a)->cont->chunk = 6;
 }
 
 int	ft_chunks(int size)
@@ -63,9 +73,9 @@ int	ft_chunks(int size)
 	int	chunks;
 
 	chunks = 1;
-	if (size <= 8)
+	if (size <= 3)
 		return (chunks);
-	if (size > 8 && size <= 30)
+	else if (size > 3 && size <= 30)
 		chunks = 2;
 	else if (size > 30 && size <= 50)
 		chunks = 3;
@@ -77,26 +87,64 @@ int	ft_chunks(int size)
 	return (chunks);
 }
 
-int	ft_find_closest(t_list **lst, int chunk, int size)
+int	ft_find_chunk(t_list **lst, int chunk, int size)
 {
 	int		dist_t;
 	int		dist_b;
 	int		i;
 	t_list	*tmp;
+	int		chunk_done;
 
+	chunk_done = 1;
 	dist_t = 0;
-	dist_b = -1;
+	dist_b = -1000000;
 	i = 0;
 	tmp = *lst;
 	while (tmp)
 	{
 		if (dist_t == 0 && tmp->cont->chunk == chunk)
 			dist_t = i;
-		if (dist_b > -(size) + i && tmp->cont->chunk == chunk)
+		if (dist_b < -(size) + i && tmp->cont->chunk == chunk)
 			dist_b = -(size) + i;
+		if (tmp->cont->chunk == chunk)
+			chunk_done = 0;
 		tmp = tmp->next;
 		i++;
 	}
+	if (chunk_done == 1)
+		return (-1000000);
+	if (dist_t > -(dist_b))
+		return (dist_b);
+	else
+		return (dist_t);
+}
+
+int	ft_find_index(t_list **lst_1, int index, int size)
+{
+	int		dist_t;
+	int		dist_b;
+	int		i;
+	t_list	*tmp;
+	int		chunk_done;
+
+	chunk_done = 1;
+	dist_t = 0;
+	dist_b = -1000000;
+	i = 0;
+	tmp = *lst_1;
+	while (tmp)
+	{
+		if (dist_t == 0 && tmp->cont->index == index)
+			dist_t = i;
+		if (dist_b < -(size) + i && tmp->cont->index == index)
+			dist_b = -(size) + i;
+		if (tmp->cont->index == index)
+			chunk_done = 0;
+		tmp = tmp->next;
+		i++;
+	}
+	if (chunk_done == 1)
+		return (-1000000);
 	if (dist_t > -(dist_b))
 		return (dist_b);
 	else

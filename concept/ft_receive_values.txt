@@ -1,0 +1,7 @@
+receiving the Values in correct order from the Right:
+    find value that fits criteria on the right (index fits, chunk fits)
+    
+    Turn to the right spot on the left (check if ss rr oder rrr beneficial)
+    pa
+    start again
+    
