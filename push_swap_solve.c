@@ -6,7 +6,7 @@
 /*   By: wssmrks <wssmrks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/18 19:38:00 by wssmrks          ###   ########.fr       */
+/*   Updated: 2024/03/18 22:51:40 by wssmrks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	ft_solve_3_l(t_list **lst_a)
 		else
 			ft_ra(lst_a, 0);
 	}
-	else
+	else if ((*lst_a)->cont->value > (*lst_a)->next->cont->value
+		&& (*lst_a)->next->cont->value > (*lst_a)->next->next->cont->value)
 	{
 		ft_sa(lst_a, 0);
 		ft_rra(lst_a, 0);
@@ -96,7 +97,7 @@ void	ft_solve_5(t_list **lst_a, t_list **lst_b, int *size, int chunks)
 	int		size_a;
 	int		size_b;
 	int		dist;
-	
+
 	chunk = chunks - 1;
 	size_a = *size;
 	size_b = 0;
@@ -131,7 +132,7 @@ void	ft_solve_5(t_list **lst_a, t_list **lst_b, int *size, int chunks)
 		}
 	}
 	ft_solve_3_l(lst_a);
-	write(2, "Solving algorithm not in place yet!\n", 36);
+	ft_push_val(lst_a, lst_b, size_a, size_b);
 	lst_a = NULL;
 	lst_b = NULL;
 	*size = 0;
@@ -179,7 +180,7 @@ void	ft_solve_10(t_list **lst_a, t_list **lst_b, int *size, int chunks)
 		}
 	}
 	ft_solve_3_l(lst_a);
-	write(2, "Solving algorithm not in place yet!\n", 36);
+	ft_push_val(lst_a, lst_b, size_a, size_b);
 	lst_a = NULL;
 	lst_b = NULL;
 	*size = 0;
@@ -192,6 +193,7 @@ void	ft_solve_big(t_list **lst_a, t_list **lst_b, int *size, int chunks)
 	int		size_a;
 	int		size_b;
 	int		dist;
+
 
 	chunk = chunks - 1;
 	size_a = *size;
@@ -227,38 +229,55 @@ void	ft_solve_big(t_list **lst_a, t_list **lst_b, int *size, int chunks)
 		}
 	}
 	ft_solve_3_l(lst_a);
-	ft_push_val(lst_a, lst_b, size_b);
-	write(2, "Solving algorithm not in place yet!\n", 36);
+	ft_push_val(lst_a, lst_b, size_a, size_b);
+	dist = ft_find_index(lst_a, 0, *size);
+	while (dist != 0)
+	{
+		if (dist < 0)
+		{
+			ft_rra(lst_a, 0);
+			dist++;
+		}
+		else
+		{
+			ft_ra(lst_a, 0);
+			dist--;
+		}
+	}
 	lst_a = NULL;
 	lst_b = NULL;
 	*size = 0;
 	return ;
 }
 
-void	ft_push_val(t_list **lst_1, t_list **lst_2, int size_2)
+void	ft_push_val(t_list **lst_1, t_list **lst_2, int size_1, int size_2)
 {
 	int		dist;
+	t_list	*tmp;
 
 	while (size_2 > 0)
 	{
-		dist = ft_find_index(lst_1, (*lst_2)->cont->index, ft_lstsize(*lst_1));
+		tmp = *lst_2;
+		dist = ft_find_index(lst_1, tmp->cont->index, size_1);
 		while (dist != 0 && dist != -1000000)
 		{
 			if (dist < 0)
 			{
-				ft_rrb(lst_2, 0);
+				ft_rra(lst_1, 0);
 				dist++;
 			}
 			else
 			{
-				ft_rb(lst_2, 0);
+				ft_ra(lst_1, 0);
 				dist--;
 			}
 		}
 		if (dist == 0)
 		{
-			ft_pa(lst_1, lst_2, 0);
+			ft_pa(lst_1, &(*lst_2), 0);
+			ft_ra(lst_1, 0);
 			size_2--;
+			size_1++;
 		}
 	}
 }

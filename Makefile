@@ -65,16 +65,12 @@ visualizer:
 #	sudo apt-get install libx11-dev libxrandr-dev
 #	sudo apt-get install libudev-dev
 #	sudo apt-get install libfreetype-dev
-	cd push_swap_visualizer
-	mkdir build
-	cd build
-	cmake ..
-	make
-	cd ../..
-	./push_swap_visualizer/build/visualizer
+	mkdir push_swap_visualizer/build
+	cmake -S push_swap_visualizer
+	$(MAKE) -C push_swap_visualizer/build
   else
 	@echo "visualizer already available"
-	./push_swap_visualizer/build/bin/visualizer
+	cd push_swap_visualizer/build/ && ./bin/visualizer
   endif
 
 

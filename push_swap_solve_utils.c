@@ -6,7 +6,7 @@
 /*   By: wssmrks <wssmrks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/18 19:36:40 by wssmrks          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:35:45 by wssmrks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,13 @@ int	ft_find_chunk(t_list **lst, int chunk, int size)
 	int		chunk_done;
 
 	chunk_done = 1;
-	dist_t = 0;
+	dist_t = -1;
 	dist_b = -1000000;
 	i = 0;
 	tmp = *lst;
 	while (tmp)
 	{
-		if (dist_t == 0 && tmp->cont->chunk == chunk)
+		if (dist_t == -1 && tmp->cont->chunk == chunk)
 			dist_t = i;
 		if (dist_b < -(size) + i && tmp->cont->chunk == chunk)
 			dist_b = -(size) + i;
@@ -125,26 +125,24 @@ int	ft_find_index(t_list **lst_1, int index, int size)
 	int		dist_b;
 	int		i;
 	t_list	*tmp;
-	int		chunk_done;
 
-	chunk_done = 1;
 	dist_t = 0;
 	dist_b = -1000000;
 	i = 0;
 	tmp = *lst_1;
 	while (tmp)
 	{
-		if (dist_t == 0 && tmp->cont->index == index)
+		if (tmp->cont->index < index)
 			dist_t = i;
-		if (dist_b < -(size) + i && tmp->cont->index == index)
-			dist_b = -(size) + i;
-		if (tmp->cont->index == index)
-			chunk_done = 0;
+		if (dist_b < -(size - 1) + i && tmp->cont->index < index)
+			dist_b = -(size - 1) + i;
+		if (tmp->cont->index == index && i > size / 2)
+			return (-(size) + i);
+		if (tmp->cont->index == index && i < size / 2)
+			return (i);
 		tmp = tmp->next;
 		i++;
 	}
-	if (chunk_done == 1)
-		return (-1000000);
 	if (dist_t > -(dist_b))
 		return (dist_b);
 	else

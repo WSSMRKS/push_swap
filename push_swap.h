@@ -6,7 +6,7 @@
 /*   By: wssmrks <wssmrks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:20:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/18 19:38:16 by wssmrks          ###   ########.fr       */
+/*   Updated: 2024/03/18 20:54:31 by wssmrks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void		ft_assign_chunk(t_list **lst_a, int size, int chunks);
 int			ft_chunks(int size);
 int			ft_find_chunk(t_list **lst, int chunk, int size);
 int			ft_find_index(t_list **lst_1, int index, int size);
-void		ft_push_val(t_list **lst_1, t_list **lst_2, int size_2);
+void		ft_push_val(t_list **lst_1, t_list **lst_2, int size_1, int size_2);
 // libft content:
 int			ft_atoi(const char *nptr);
 long		ft_atol(const char *nptr);

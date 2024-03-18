@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_lst_fncts_1.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: wssmrks <wssmrks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:19:56 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/13 16:56:39 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/18 20:45:40 by wssmrks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_pa(t_list **lst_a, t_list **lst_b, int silent)
 		return ;
 	}
 	node = *lst_b;
-	lst_b = &(*lst_b)->next;
+	*lst_b = (*lst_b)->next;
 	node->next = *lst_a;
 	*lst_a = node;
 	if (silent != 1)
