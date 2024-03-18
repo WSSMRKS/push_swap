@@ -53,7 +53,7 @@ libft:
 
 ex: $(NAME) clean
 
-visualizer:
+visu:
   ifeq ("$(wildcard $(VISDIR))", "")
 	@echo "visualizer not yet available"
 	git clone https://github.com/o-reo/push_swap_visualizer.git
@@ -66,12 +66,15 @@ visualizer:
 #	sudo apt-get install libudev-dev
 #	sudo apt-get install libfreetype-dev
 	mkdir push_swap_visualizer/build
-	cmake -S push_swap_visualizer
+	cd push_swap_visualizer/build && cmake ..
 	$(MAKE) -C push_swap_visualizer/build
   else
 	@echo "visualizer already available"
 	cd push_swap_visualizer/build/ && ./bin/visualizer
   endif
+
+rm_visu:
+	rm -rf push_swap_visualizer
 
 
 test: $(NAME)
