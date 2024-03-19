@@ -6,7 +6,7 @@
 /*   By: wssmrks <wssmrks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/18 22:51:40 by wssmrks          ###   ########.fr       */
+/*   Updated: 2024/03/19 18:24:55 by wssmrks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,11 @@ void	ft_solve_3_r(t_list **lst_b)
 		else
 			ft_rb(lst_b, 0);
 	}
-	else
+	else if ((*lst_b)->cont->value < (*lst_b)->next->cont->value
+		&& (*lst_b)->next->cont->value < (*lst_b)->next->next->cont->value)
 	{
-		ft_sa(lst_b, 0);
-		ft_rra(lst_b, 0);
+		ft_sb(lst_b, 0);
+		ft_rrb(lst_b, 0);
 	}
 }
 
@@ -275,7 +276,8 @@ void	ft_push_val(t_list **lst_1, t_list **lst_2, int size_1, int size_2)
 		if (dist == 0)
 		{
 			ft_pa(lst_1, &(*lst_2), 0);
-			ft_ra(lst_1, 0);
+			if (*lst_2 != NULL && (*lst_2)->cont->index > (*lst_1)->cont->index)
+				ft_ra(lst_1, 0);
 			size_2--;
 			size_1++;
 		}

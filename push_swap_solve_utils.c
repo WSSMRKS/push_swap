@@ -6,7 +6,7 @@
 /*   By: wssmrks <wssmrks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/18 21:35:45 by wssmrks          ###   ########.fr       */
+/*   Updated: 2024/03/19 18:36:22 by wssmrks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,19 @@ void	ft_calc_index(t_list **lst_a, int size)
 
 void	ft_assign_chunk(t_list **lst_a, int size, int chunks)
 {
-	if (((float)size / chunks) > (*lst_a)->cont->index)
+	if (((float)(size - 1) / chunks) > (*lst_a)->cont->index)
 		(*lst_a)->cont->chunk = 0;
-	if (((float)size / chunks) < (*lst_a)->cont->index)
+	if (((float)(size - 1) / chunks) < (*lst_a)->cont->index)
 		(*lst_a)->cont->chunk = 1;
-	if (((float)size / chunks) * 2 < (*lst_a)->cont->index)
+	if (((float)(size - 1) / chunks) * 2 < (*lst_a)->cont->index)
 		(*lst_a)->cont->chunk = 2;
-	if (((float)size / chunks) * 3 < (*lst_a)->cont->index)
+	if (((float)(size - 1) / chunks) * 3 < (*lst_a)->cont->index)
 		(*lst_a)->cont->chunk = 3;
-	if (((float)size / chunks) * 4 < (*lst_a)->cont->index)
+	if (((float)(size - 1) / chunks) * 4 < (*lst_a)->cont->index)
 		(*lst_a)->cont->chunk = 4;
-	if (((float)size / chunks) * 5 < (*lst_a)->cont->index)
+	if (((float)(size - 1) / chunks) * 5 < (*lst_a)->cont->index)
 		(*lst_a)->cont->chunk = 5;
-	if (((float)size / chunks) * 6 < (*lst_a)->cont->index)
+	if (((float)(size - 1) / chunks) * 6 < (*lst_a)->cont->index)
 		(*lst_a)->cont->chunk = 6;
 }
 
@@ -119,6 +119,42 @@ int	ft_find_chunk(t_list **lst, int chunk, int size)
 		return (dist_t);
 }
 
+// Neuer Ansatz:
+// int ft_find_index(t_list **lst_1, int index, int size)
+// {
+// 	int		dist_t;
+// 	int		dist_b;
+// 	int		i;
+// 	t_list	*tmp;
+
+// 	dist_t = -1;
+// 	dist_b = -1000000;
+// 	i = 0;
+// 	tmp = *lst_1;
+// 	if (tmp->cont->index > index && (ft_lstlast(&lst_1))->cont->index < index)
+// 		dist_t = i + 1;
+// 	while (tmp)
+// 	{
+// 		if (tmp->next && tmp->cont->index < index && tmp->next->cont->index < tmp->cont->index)
+// 		{
+// 			dist_t = i + 1;
+// 			dist_b = -(size - 1) + i;
+// 		}
+// 		if (dist_b < -(size - 1) + i && tmp->cont->index < index)
+// 			dist_b = -(size - 1) + i;
+// 		if (tmp->cont->index == index && i >= size / 2)
+// 			return (-(size) + i);
+// 		if (tmp->cont->index == index && i <= size / 2)
+// 			return (i);
+// 		tmp = tmp->next;
+// 		i++;
+// 	}
+// 	if (dist_t > -(dist_b))
+// 		return (dist_b);
+// 	else
+// 		return (dist_t);
+// }
+
 int	ft_find_index(t_list **lst_1, int index, int size)
 {
 	int		dist_t;
@@ -126,19 +162,24 @@ int	ft_find_index(t_list **lst_1, int index, int size)
 	int		i;
 	t_list	*tmp;
 
-	dist_t = 0;
+	dist_t = -1;
 	dist_b = -1000000;
 	i = 0;
 	tmp = *lst_1;
 	while (tmp)
 	{
-		if (tmp->cont->index < index)
-			dist_t = i;
+		if (tmp->next && tmp->cont->index < index && tmp->next->cont->index < tmp->cont->index)
+		{
+			dist_t = i + 1;
+			dist_b = -(size - 1) + i;
+		}
+		// if (tmp->cont->index < index)
+		// 	dist_t = i + 1;
 		if (dist_b < -(size - 1) + i && tmp->cont->index < index)
 			dist_b = -(size - 1) + i;
-		if (tmp->cont->index == index && i > size / 2)
+		if (tmp->cont->index == index && i >= size / 2)
 			return (-(size) + i);
-		if (tmp->cont->index == index && i < size / 2)
+		if (tmp->cont->index == index && i <= size / 2)
 			return (i);
 		tmp = tmp->next;
 		i++;
@@ -149,3 +190,32 @@ int	ft_find_index(t_list **lst_1, int index, int size)
 		return (dist_t);
 }
 
+// int	ft_find_index(t_list **lst_1, int index, int size)
+// {
+// 	int		dist_t;
+// 	int		dist_b;
+// 	int		i;
+// 	t_list	*tmp;
+
+// 	dist_t = -1;
+// 	dist_b = -1000000;
+// 	i = 0;
+// 	tmp = *lst_1;
+// 	while (tmp)
+// 	{
+// 		if (tmp->cont->index < index)
+// 			dist_t = i + 1;
+// 		if (dist_b < -(size - 1) + i && tmp->cont->index < index)
+// 			dist_b = -(size - 1) + i;
+// 		if (tmp->cont->index == index && i >= size / 2)
+// 			return (-(size) + i);
+// 		if (tmp->cont->index == index && i <= size / 2)
+// 			return (i);
+// 		tmp = tmp->next;
+// 		i++;
+// 	}
+// 	if (dist_t > -(dist_b))
+// 		return (dist_b);
+// 	else
+// 		return (dist_t);
+// }
