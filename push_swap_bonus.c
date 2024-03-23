@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: wssmrks <wssmrks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/14 13:08:50 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/24 00:06:23 by wssmrks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_switch(int **stack_a, int *size)
 	exit(1);
 }
 
-int	ft_ex_line(t_list *lst_a, t_list *lst_b, char *line)
+int	ft_ex_line(t_list **lst_a, t_list **lst_b, char *line)
 {
 	if (ft_strncmp(line, "sa\n", 4) == 0)
 		ft_sa(lst_a, 1);
@@ -47,7 +47,7 @@ int	ft_ex_line(t_list *lst_a, t_list *lst_b, char *line)
 	return (1);
 }
 
-void	ft_loop_lines(char *line, t_list *lst_a, t_list *lst_b)
+void	ft_loop_lines(char *line, t_list **lst_a, t_list **lst_b)
 {
 	while (line)
 	{
@@ -57,9 +57,9 @@ void	ft_loop_lines(char *line, t_list *lst_a, t_list *lst_b)
 			free(line);
 			line = NULL;
 			if (lst_a)
-				ft_lstfree(&lst_a);
+				ft_lstfree(lst_a);
 			if (lst_b)
-				ft_lstfree(&lst_b);
+				ft_lstfree(lst_b);
 		}
 		else
 		{
@@ -69,13 +69,13 @@ void	ft_loop_lines(char *line, t_list *lst_a, t_list *lst_b)
 	}
 }
 
-void	ft_checker(t_list *lst_a, t_list *lst_b)
+void	ft_checker(t_list **lst_a, t_list **lst_b)
 {
 	char	*line;
 	int		dup_sorted;
 
 	dup_sorted = 0;
-	dup_sorted = ft_dup_sorted(lst_a);
+	dup_sorted = ft_dup_sorted(*lst_a);
 	line = ft_get_next_line(0);
 	if (dup_sorted == -1 && line == NULL)
 		ft_printf("ERROR(DUPLICATE)!\n");
@@ -83,14 +83,14 @@ void	ft_checker(t_list *lst_a, t_list *lst_b)
 		ft_printf("OK(SORTED)!\n");
 	else if (line)
 		ft_loop_lines(line, lst_a, lst_b);
-	if (ft_dup_sorted(lst_a) == 1 && !lst_b)
+	if (ft_dup_sorted(*lst_a) == 1 && !*lst_b)
 		ft_printf("OK(SORTED through instructions)!\n");
 	else
 		ft_printf("KO! Not sorted after execution\n");
 	if (lst_a)
-		ft_lstfree(&lst_a);
+		ft_lstfree(lst_a);
 	if (lst_b)
-		ft_lstfree(&lst_b);
+		ft_lstfree(lst_b);
 }
 
 void	ft_check(int **stack_a, int *size)
@@ -100,7 +100,7 @@ void	ft_check(int **stack_a, int *size)
 
 	lst_a = ft_fill_lst(stack_a, size);
 	lst_b = NULL;
-	ft_checker(lst_a, lst_b);
+	ft_checker(&lst_a, &lst_b);
 	ft_free((void **)stack_a, 0);
 	exit(1);
 }
