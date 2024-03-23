@@ -1,0 +1,19 @@
+FT_solve_big
+Current working mode:
+
+Calculate Index and chunks
+find chunks and push to b
+solve 3 r
+solve 3 l
+ft_push_value
+find spot in stack
+    rotate, push
+    spot in stack =
+        next index is bigger
+        last index is smaller
+        distance from bottom
+        distance from top
+    special case first:
+        if index lst->content->index is bigger then index
+        and
+        

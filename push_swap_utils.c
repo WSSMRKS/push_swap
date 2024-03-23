@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: wssmrks <wssmrks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:19:56 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/15 12:44:27 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/23 21:27:48 by wssmrks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ t_cont	*ft_create_cont(int *val)
 
 	l_obj = malloc(sizeof(t_cont));
 	l_obj->value = *val;
+	l_obj->index = 0;
+	l_obj->chunk = 0;
 	return (l_obj);
 }
 

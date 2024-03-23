@@ -6,7 +6,7 @@
 /*   By: wssmrks <wssmrks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:20:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/18 20:54:31 by wssmrks          ###   ########.fr       */
+/*   Updated: 2024/03/23 18:53:06 by wssmrks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_cont
 	int	pivot;
 	int	distance;
 	int	chunk;
+	int price;
 }			t_cont;
 
 typedef struct s_list

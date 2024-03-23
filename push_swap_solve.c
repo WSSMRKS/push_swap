@@ -6,7 +6,7 @@
 /*   By: wssmrks <wssmrks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/19 18:24:55 by wssmrks          ###   ########.fr       */
+/*   Updated: 2024/03/23 21:03:58 by wssmrks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ft_solve(int **stack_a, int *size)
 	// else if (*size <= 10)
 	// 	ft_solve_10(&lst_a, &lst_b, size, ft_chunks(*size));
 	else
+		// solver function!!
 		ft_solve_big(&lst_a, &lst_b, size, ft_chunks(*size));
 	ft_lstfree(&lst_a);
 	ft_lstfree(&lst_b);
@@ -91,6 +92,134 @@ void	ft_solve_3_r(t_list **lst_b)
 		ft_rrb(lst_b, 0);
 	}
 }
+
+
+void	ft_solve_big(t_list **lst_a, t_list **lst_b, int *size, int chunks)
+{
+	int		chunk;
+	int		size_a;
+	int		size_b;
+	int		dist;
+
+
+	chunk = chunks - 1;
+	size_a = *size;
+	size_b = 0;
+	ft_calc_index(lst_a, *size);
+	while (size_a > 3)
+	{
+		dist = ft_find_chunk(lst_a, chunk, size_a);
+		if (dist == -1000000)
+			chunk--;
+		while (dist != 0 && dist != -1000000)
+		{
+			if (dist < 0)
+			{
+				ft_rra(lst_a, 0);
+				dist++;
+			}
+			else
+			{
+				ft_ra(lst_a, 0);
+				dist--;
+			}
+		}
+		if (dist == 0)
+		{
+			if (size_b == 3)
+				ft_solve_3_r(lst_b);
+			{
+				ft_pb(lst_a, lst_b, 0);
+				size_b++;
+			}
+			size_a--;
+		}
+	}
+	ft_solve_3_l(lst_a);
+	ft_push_val(lst_a, lst_b, size_a, size_b);
+	dist = ft_find_index(lst_a, 0, *size);
+	while (dist != 0)
+	{
+		if (dist < 0)
+		{
+			ft_rra(lst_a, 0);
+			dist++;
+		}
+		else
+		{
+			ft_ra(lst_a, 0);
+			dist--;
+		}
+	}
+	lst_a = NULL;
+	lst_b = NULL;
+	*size = 0;
+	return ;
+}
+
+void	ft_push_val(t_list **lst_1, t_list **lst_2, int size_1, int size_2)
+{
+	int		dist;
+	t_list	*tmp;
+
+	while (size_2 > 0)
+	{
+		tmp = *lst_2;
+		dist = ft_find_index(lst_1, tmp->cont->index, ft_lstsize(*lst_1));
+		while (dist != 0 && dist != -1000000)
+		{
+			if (dist < 0)
+			{
+				ft_rra(lst_1, 0);
+				dist++;
+			}
+			else
+			{
+				ft_ra(lst_1, 0);
+				dist--;
+			}
+		}
+		if (dist == 0)
+		{
+			ft_pa(lst_1, lst_2, 0);
+			size_2--;
+			size_1++;
+		}
+	}
+}
+
+// void	ft_push_val(t_list **lst_1, t_list **lst_2, int size_1, int size_2)
+// {
+// 	int		dist;
+// 	t_list	*tmp;
+
+// 	while (size_2 > 0)
+// 	{
+// 		tmp = *lst_2;
+// 		dist = ft_find_index(lst_1, tmp->cont->index, ft_lstsize(*lst_1));
+// 		while (dist != 0 && dist != -1000000)
+// 		{
+// 			if (dist < 0)
+// 			{
+// 				ft_rra(lst_1, 0);
+// 				dist++;
+// 			}
+// 			else
+// 			{
+// 				ft_ra(lst_1, 0);
+// 				dist--;
+// 			}
+// 		}
+// 		if (dist == 0)
+// 		{
+// 			ft_pa(lst_1, &(*lst_2), 0);
+// 			if (*lst_2 != NULL && (*lst_2)->cont->index > (*lst_1)->cont->index)
+// 				ft_ra(lst_1, 0);
+// 			size_2--;
+// 			size_1++;
+// 		}
+// 	}
+// }
 
 void	ft_solve_5(t_list **lst_a, t_list **lst_b, int *size, int chunks)
 {
@@ -186,100 +315,4 @@ void	ft_solve_10(t_list **lst_a, t_list **lst_b, int *size, int chunks)
 	lst_b = NULL;
 	*size = 0;
 	return ;
-}
-
-void	ft_solve_big(t_list **lst_a, t_list **lst_b, int *size, int chunks)
-{
-	int		chunk;
-	int		size_a;
-	int		size_b;
-	int		dist;
-
-
-	chunk = chunks - 1;
-	size_a = *size;
-	size_b = 0;
-	ft_calc_index(lst_a, *size);
-	while (size_a > 3)
-	{
-		dist = ft_find_chunk(lst_a, chunk, size_a);
-		if (dist == -1000000)
-			chunk--;
-		while (dist != 0 && dist != -1000000)
-		{
-			if (dist < 0)
-			{
-				ft_rra(lst_a, 0);
-				dist++;
-			}
-			else
-			{
-				ft_ra(lst_a, 0);
-				dist--;
-			}
-		}
-		if (dist == 0)
-		{
-			if (size_b == 3)
-				ft_solve_3_r(lst_b);
-			{
-				ft_pb(lst_a, lst_b, 0);
-				size_b++;
-			}
-			size_a--;
-		}
-	}
-	ft_solve_3_l(lst_a);
-	ft_push_val(lst_a, lst_b, size_a, size_b);
-	dist = ft_find_index(lst_a, 0, *size);
-	while (dist != 0)
-	{
-		if (dist < 0)
-		{
-			ft_rra(lst_a, 0);
-			dist++;
-		}
-		else
-		{
-			ft_ra(lst_a, 0);
-			dist--;
-		}
-	}
-	lst_a = NULL;
-	lst_b = NULL;
-	*size = 0;
-	return ;
-}
-
-void	ft_push_val(t_list **lst_1, t_list **lst_2, int size_1, int size_2)
-{
-	int		dist;
-	t_list	*tmp;
-
-	while (size_2 > 0)
-	{
-		tmp = *lst_2;
-		dist = ft_find_index(lst_1, tmp->cont->index, size_1);
-		while (dist != 0 && dist != -1000000)
-		{
-			if (dist < 0)
-			{
-				ft_rra(lst_1, 0);
-				dist++;
-			}
-			else
-			{
-				ft_ra(lst_1, 0);
-				dist--;
-			}
-		}
-		if (dist == 0)
-		{
-			ft_pa(lst_1, &(*lst_2), 0);
-			if (*lst_2 != NULL && (*lst_2)->cont->index > (*lst_1)->cont->index)
-				ft_ra(lst_1, 0);
-			size_2--;
-			size_1++;
-		}
-	}
 }

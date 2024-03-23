@@ -6,7 +6,7 @@
 /*   By: wssmrks <wssmrks@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/19 18:36:22 by wssmrks          ###   ########.fr       */
+/*   Updated: 2024/03/23 23:07:31 by wssmrks          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_switch(int **stack_a, int *size)
 {
+	// Calling solver function
 	ft_solve(stack_a, size);
 	exit(1);
 }
@@ -66,22 +67,65 @@ void	ft_assign_chunk(t_list **lst_a, int size, int chunks)
 		(*lst_a)->cont->chunk = 5;
 	if (((float)(size - 1) / chunks) * 6 < (*lst_a)->cont->index)
 		(*lst_a)->cont->chunk = 6;
+	if (((float)(size - 1) / chunks) * 7 < (*lst_a)->cont->index)
+		(*lst_a)->cont->chunk = 7;
+	if (((float)(size - 1) / chunks) * 8 < (*lst_a)->cont->index)
+		(*lst_a)->cont->chunk = 8;
+	if (((float)(size - 1) / chunks) * 9 < (*lst_a)->cont->index)
+		(*lst_a)->cont->chunk = 9;
+	if (((float)(size - 1) / chunks) * 10 < (*lst_a)->cont->index)
+		(*lst_a)->cont->chunk = 10;
+	if (((float)(size - 1) / chunks) * 11 < (*lst_a)->cont->index)
+		(*lst_a)->cont->chunk = 11;
+	if (((float)(size - 1) / chunks) * 12 < (*lst_a)->cont->index)
+		(*lst_a)->cont->chunk = 12;
+	if (((float)(size - 1) / chunks) * 13 < (*lst_a)->cont->index)
+		(*lst_a)->cont->chunk = 13;
+	if (((float)(size - 1) / chunks) * 14 < (*lst_a)->cont->index)
+		(*lst_a)->cont->chunk = 14;
+	if (((float)(size - 1) / chunks) * 15 < (*lst_a)->cont->index)
+		(*lst_a)->cont->chunk = 15;
+	if (((float)(size - 1) / chunks) * 16 < (*lst_a)->cont->index)
+		(*lst_a)->cont->chunk = 16;
 }
+
+// void	ft_assign_chunk(t_list **lst_a, int size, int chunks)
+// {
+// 	int	i;
+
+// 	i = 1;
+// 	if (((float)(size - 1) / chunks) > (*lst_a)->cont->index)
+// 		(*lst_a)->cont->chunk = 0;
+// 	else
+// 	{
+// 		while (((float)(size - 1) / chunks) * i < (*lst_a)->cont->index)
+// 			i++;
+// 		(*lst_a)->cont->chunk = i;
+// 	}
+// }
 
 int	ft_chunks(int size)
 {
 	int	chunks;
 
 	chunks = 1;
-	if (size <= 3)
+	if (size <= 15)
 		return (chunks);
-	else if (size > 3 && size <= 30)
-		chunks = 2;
-	else if (size > 30 && size <= 50)
+	else if (size > 15 && size <= 50)
 		chunks = 3;
+	else if (size > 50 && size < 80)
+		chunks = 5;
+	else if (size > 80 && size <= 200)
+		chunks = 7;
+	else if (size > 200 && size <= 450)
+		chunks = 10;
+	else if (size > 450 && size <= 950)
+		chunks = 12;
+	else if (size > 950 && size <= 2500)
+		chunks = 17;
 	else
 	{
-		while (size / chunks > 20)
+		while (size / chunks > 50)
 			chunks++;
 	}
 	return (chunks);
@@ -161,34 +205,42 @@ int	ft_find_index(t_list **lst_1, int index, int size)
 	int		dist_b;
 	int		i;
 	t_list	*tmp;
+	t_list	*end_node;
 
 	dist_t = -1;
 	dist_b = -1000000;
 	i = 0;
+	end_node = ft_lstlast(*lst_1);
+	if ((*lst_1)->cont->index > index && end_node->cont->index < index)
+		return (0);
+	else if (index > end_node->cont->index && (*lst_1)->cont->index < end_node->cont->index)
+		return (0);
 	tmp = *lst_1;
 	while (tmp)
 	{
-		if (tmp->next && tmp->cont->index < index && tmp->next->cont->index < tmp->cont->index)
+		if (tmp->next != NULL && tmp->next->cont->index < tmp->cont->index)
 		{
 			dist_t = i + 1;
 			dist_b = -(size - 1) + i;
 		}
-		// if (tmp->cont->index < index)
-		// 	dist_t = i + 1;
-		if (dist_b < -(size - 1) + i && tmp->cont->index < index)
+		if (tmp->next != NULL && tmp->cont->index < index && tmp->next->cont->index > index)
+		{
+			dist_t = i + 1;
 			dist_b = -(size - 1) + i;
-		if (tmp->cont->index == index && i >= size / 2)
-			return (-(size) + i);
-		if (tmp->cont->index == index && i <= size / 2)
-			return (i);
+			break;
+		}
 		tmp = tmp->next;
 		i++;
 	}
+	if (dist_t == -1 && dist_b == -1000000)
+		return (0);
 	if (dist_t > -(dist_b))
 		return (dist_b);
 	else
 		return (dist_t);
 }
+
+
 
 // int	ft_find_index(t_list **lst_1, int index, int size)
 // {
