@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wssmrks <wssmrks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:20:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/23 18:53:06 by wssmrks          ###   ########.fr       */
+/*   Updated: 2024/03/25 21:58:39 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_cont
 	int	pivot;
 	int	distance;
 	int	chunk;
-	int price;
+	int	price;
 }			t_cont;
 
 typedef struct s_list
@@ -63,6 +63,7 @@ void		ft_calc_index(t_list **lst_a, int size);
 void		ft_assign_chunk(t_list **lst_a, int size, int chunks);
 int			ft_chunks(int size);
 int			ft_find_chunk(t_list **lst, int chunk, int size);
+void		ft_find_chunk_init(int *dist_b, int *dist_t, int *i, int *ch_done);
 int			ft_find_index(t_list **lst_1, int index, int size);
 void		ft_push_val(t_list **lst_1, t_list **lst_2, int size_1, int size_2);
 // libft content:

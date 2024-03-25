@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_solve_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wssmrks <wssmrks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/23 23:07:31 by wssmrks          ###   ########.fr       */
+/*   Updated: 2024/03/25 22:02:59 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ft_switch(int **stack_a, int *size)
 {
-	// Calling solver function
 	ft_solve(stack_a, size);
 	exit(1);
 }
@@ -53,56 +52,21 @@ void	ft_calc_index(t_list **lst_a, int size)
 
 void	ft_assign_chunk(t_list **lst_a, int size, int chunks)
 {
-	if (((float)(size - 1) / chunks) > (*lst_a)->cont->index)
+	static float	chunk_size;
+	int				i;
+
+	i = 1;
+	chunk_size = ((float)(size - 1) / chunks);
+
+	if (chunk_size > (*lst_a)->cont->index)
 		(*lst_a)->cont->chunk = 0;
-	if (((float)(size - 1) / chunks) < (*lst_a)->cont->index)
-		(*lst_a)->cont->chunk = 1;
-	if (((float)(size - 1) / chunks) * 2 < (*lst_a)->cont->index)
-		(*lst_a)->cont->chunk = 2;
-	if (((float)(size - 1) / chunks) * 3 < (*lst_a)->cont->index)
-		(*lst_a)->cont->chunk = 3;
-	if (((float)(size - 1) / chunks) * 4 < (*lst_a)->cont->index)
-		(*lst_a)->cont->chunk = 4;
-	if (((float)(size - 1) / chunks) * 5 < (*lst_a)->cont->index)
-		(*lst_a)->cont->chunk = 5;
-	if (((float)(size - 1) / chunks) * 6 < (*lst_a)->cont->index)
-		(*lst_a)->cont->chunk = 6;
-	if (((float)(size - 1) / chunks) * 7 < (*lst_a)->cont->index)
-		(*lst_a)->cont->chunk = 7;
-	if (((float)(size - 1) / chunks) * 8 < (*lst_a)->cont->index)
-		(*lst_a)->cont->chunk = 8;
-	if (((float)(size - 1) / chunks) * 9 < (*lst_a)->cont->index)
-		(*lst_a)->cont->chunk = 9;
-	if (((float)(size - 1) / chunks) * 10 < (*lst_a)->cont->index)
-		(*lst_a)->cont->chunk = 10;
-	if (((float)(size - 1) / chunks) * 11 < (*lst_a)->cont->index)
-		(*lst_a)->cont->chunk = 11;
-	if (((float)(size - 1) / chunks) * 12 < (*lst_a)->cont->index)
-		(*lst_a)->cont->chunk = 12;
-	if (((float)(size - 1) / chunks) * 13 < (*lst_a)->cont->index)
-		(*lst_a)->cont->chunk = 13;
-	if (((float)(size - 1) / chunks) * 14 < (*lst_a)->cont->index)
-		(*lst_a)->cont->chunk = 14;
-	if (((float)(size - 1) / chunks) * 15 < (*lst_a)->cont->index)
-		(*lst_a)->cont->chunk = 15;
-	if (((float)(size - 1) / chunks) * 16 < (*lst_a)->cont->index)
-		(*lst_a)->cont->chunk = 16;
+	else if (chunk_size < (*lst_a)->cont->index)
+	{
+		while ((float)chunk_size * i < (*lst_a)->cont->index)
+			i++;
+		(*lst_a)->cont->chunk = i - 1;
+	}
 }
-
-// void	ft_assign_chunk(t_list **lst_a, int size, int chunks)
-// {
-// 	int	i;
-
-// 	i = 1;
-// 	if (((float)(size - 1) / chunks) > (*lst_a)->cont->index)
-// 		(*lst_a)->cont->chunk = 0;
-// 	else
-// 	{
-// 		while (((float)(size - 1) / chunks) * i < (*lst_a)->cont->index)
-// 			i++;
-// 		(*lst_a)->cont->chunk = i;
-// 	}
-// }
 
 int	ft_chunks(int size)
 {
@@ -131,6 +95,14 @@ int	ft_chunks(int size)
 	return (chunks);
 }
 
+void	ft_find_chunk_init(int *dist_b, int *dist_t, int *i, int *ch_done)
+{
+	*i = 0;
+	*dist_t = -1;
+	*dist_b = -1000000;
+	*ch_done = 1;
+}
+
 int	ft_find_chunk(t_list **lst, int chunk, int size)
 {
 	int		dist_t;
@@ -139,10 +111,7 @@ int	ft_find_chunk(t_list **lst, int chunk, int size)
 	t_list	*tmp;
 	int		chunk_done;
 
-	chunk_done = 1;
-	dist_t = -1;
-	dist_b = -1000000;
-	i = 0;
+	ft_find_chunk_init(&dist_b, &dist_t, &i, &chunk_done);
 	tmp = *lst;
 	while (tmp)
 	{
@@ -159,48 +128,12 @@ int	ft_find_chunk(t_list **lst, int chunk, int size)
 		return (-1000000);
 	if (dist_t > -(dist_b))
 		return (dist_b);
-	else
-		return (dist_t);
+	return (dist_t);
 }
-
-// Neuer Ansatz:
-// int ft_find_index(t_list **lst_1, int index, int size)
-// {
-// 	int		dist_t;
-// 	int		dist_b;
-// 	int		i;
-// 	t_list	*tmp;
-
-// 	dist_t = -1;
-// 	dist_b = -1000000;
-// 	i = 0;
-// 	tmp = *lst_1;
-// 	if (tmp->cont->index > index && (ft_lstlast(&lst_1))->cont->index < index)
-// 		dist_t = i + 1;
-// 	while (tmp)
-// 	{
-// 		if (tmp->next && tmp->cont->index < index && tmp->next->cont->index < tmp->cont->index)
-// 		{
-// 			dist_t = i + 1;
-// 			dist_b = -(size - 1) + i;
-// 		}
-// 		if (dist_b < -(size - 1) + i && tmp->cont->index < index)
-// 			dist_b = -(size - 1) + i;
-// 		if (tmp->cont->index == index && i >= size / 2)
-// 			return (-(size) + i);
-// 		if (tmp->cont->index == index && i <= size / 2)
-// 			return (i);
-// 		tmp = tmp->next;
-// 		i++;
-// 	}
-// 	if (dist_t > -(dist_b))
-// 		return (dist_b);
-// 	else
-// 		return (dist_t);
-// }
 
 int	ft_find_index(t_list **lst_1, int index, int size)
 {
+	//solution for line issues. Make function that is returning the right distance. Pack it in return value.
 	int		dist_t;
 	int		dist_b;
 	int		i;
@@ -213,7 +146,8 @@ int	ft_find_index(t_list **lst_1, int index, int size)
 	end_node = ft_lstlast(*lst_1);
 	if ((*lst_1)->cont->index > index && end_node->cont->index < index)
 		return (0);
-	else if (index > end_node->cont->index && (*lst_1)->cont->index < end_node->cont->index)
+	else if (index > end_node->cont->index
+		&& (*lst_1)->cont->index < end_node->cont->index)
 		return (0);
 	tmp = *lst_1;
 	while (tmp)
@@ -223,11 +157,12 @@ int	ft_find_index(t_list **lst_1, int index, int size)
 			dist_t = i + 1;
 			dist_b = -(size - 1) + i;
 		}
-		if (tmp->next != NULL && tmp->cont->index < index && tmp->next->cont->index > index)
+		if (tmp->next != NULL && tmp->cont->index < index
+			&& tmp->next->cont->index > index)
 		{
 			dist_t = i + 1;
 			dist_b = -(size - 1) + i;
-			break;
+			break ;
 		}
 		tmp = tmp->next;
 		i++;
@@ -239,35 +174,3 @@ int	ft_find_index(t_list **lst_1, int index, int size)
 	else
 		return (dist_t);
 }
-
-
-
-// int	ft_find_index(t_list **lst_1, int index, int size)
-// {
-// 	int		dist_t;
-// 	int		dist_b;
-// 	int		i;
-// 	t_list	*tmp;
-
-// 	dist_t = -1;
-// 	dist_b = -1000000;
-// 	i = 0;
-// 	tmp = *lst_1;
-// 	while (tmp)
-// 	{
-// 		if (tmp->cont->index < index)
-// 			dist_t = i + 1;
-// 		if (dist_b < -(size - 1) + i && tmp->cont->index < index)
-// 			dist_b = -(size - 1) + i;
-// 		if (tmp->cont->index == index && i >= size / 2)
-// 			return (-(size) + i);
-// 		if (tmp->cont->index == index && i <= size / 2)
-// 			return (i);
-// 		tmp = tmp->next;
-// 		i++;
-// 	}
-// 	if (dist_t > -(dist_b))
-// 		return (dist_b);
-// 	else
-// 		return (dist_t);
-// }

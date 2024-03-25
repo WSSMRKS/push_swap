@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/25 16:05:47 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/25 22:04:17 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,12 @@ void	ft_solve_3_r(t_list **lst_b)
 	}
 }
 
-
 void	ft_solve_big(t_list **lst_a, t_list **lst_b, int *size, int chunks)
 {
 	int		chunk;
 	int		size_a;
 	int		size_b;
 	int		dist;
-
 
 	chunk = chunks - 1;
 	size_a = *size;
@@ -151,8 +149,6 @@ void	ft_solve_big(t_list **lst_a, t_list **lst_b, int *size, int chunks)
 	*size = 0;
 	return ;
 }
-
-
 
 void	ft_push_val(t_list **lst_1, t_list **lst_2, int size_1, int size_2)
 {

@@ -30,6 +30,7 @@ TEST_OBJ = $(TEST_SRC:.c=.o)
 
 # push_swap_visualizer #
 VISDIR = push_swap_visualizer/
+TESTDIR = Push-Swap-Tester/
 
 # Targets #
 all : $(NAME)
@@ -52,6 +53,20 @@ libft:
   endif
 
 ex: $(NAME) clean
+
+tester:
+  ifeq ("$(wildcard $(TESTDIR))", "")
+	@echo "tester not yet cloned"
+	git clone https://github.com/gemartin99/Push-Swap-Tester.git
+	cp Push-Swap-Tester/push_swap_test_linux.sh ./
+  else
+	@echo "visualizer already cloned"
+	bash push_swap_test_linux.sh
+  endif
+
+rm_tester:
+	rm -rf Push-Swap-Tester
+	rm -f push_swap_test_linux.sh
 
 visu:
   ifeq ("$(wildcard $(VISDIR))", "")
