@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wssmrks <wssmrks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/23 16:26:30 by wssmrks          ###   ########.fr       */
+/*   Updated: 2024/03/25 15:54:10 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,11 @@ int	main(int argc, char **argv)
 	}
 	else if (argc == 2)
 	{
-		// Parsing Arguments in one string
 		size = 0;
 		stack_a = ft_parse_one(argv[1], &size);
 	}
 	else
 	{
-		// Parsing Arguments in several strings
 		stack_a = ft_parse_several(argc, argv);
 		size = argc - 1;
 	}
@@ -121,7 +119,6 @@ int	main(int argc, char **argv)
 		ft_printf("ERROR\n");
 		exit(2);
 	}
-	// Switching between Solver and Checker
 	ft_switch(stack_a, &size);
 	return (1);
 }
