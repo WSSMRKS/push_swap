@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_solve_utils.c                            :+:      :+:    :+:   */
+/*   push_swap_solve_utils_1.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/25 22:02:59 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/27 10:49:50 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	ft_assign_chunk(t_list **lst_a, int size, int chunks)
 
 	i = 1;
 	chunk_size = ((float)(size - 1) / chunks);
-
 	if (chunk_size > (*lst_a)->cont->index)
 		(*lst_a)->cont->chunk = 0;
 	else if (chunk_size < (*lst_a)->cont->index)
@@ -93,84 +92,4 @@ int	ft_chunks(int size)
 			chunks++;
 	}
 	return (chunks);
-}
-
-void	ft_find_chunk_init(int *dist_b, int *dist_t, int *i, int *ch_done)
-{
-	*i = 0;
-	*dist_t = -1;
-	*dist_b = -1000000;
-	*ch_done = 1;
-}
-
-int	ft_find_chunk(t_list **lst, int chunk, int size)
-{
-	int		dist_t;
-	int		dist_b;
-	int		i;
-	t_list	*tmp;
-	int		chunk_done;
-
-	ft_find_chunk_init(&dist_b, &dist_t, &i, &chunk_done);
-	tmp = *lst;
-	while (tmp)
-	{
-		if (dist_t == -1 && tmp->cont->chunk == chunk)
-			dist_t = i;
-		if (dist_b < -(size) + i && tmp->cont->chunk == chunk)
-			dist_b = -(size) + i;
-		if (tmp->cont->chunk == chunk)
-			chunk_done = 0;
-		tmp = tmp->next;
-		i++;
-	}
-	if (chunk_done == 1)
-		return (-1000000);
-	if (dist_t > -(dist_b))
-		return (dist_b);
-	return (dist_t);
-}
-
-int	ft_find_index(t_list **lst_1, int index, int size)
-{
-	//solution for line issues. Make function that is returning the right distance. Pack it in return value.
-	int		dist_t;
-	int		dist_b;
-	int		i;
-	t_list	*tmp;
-	t_list	*end_node;
-
-	dist_t = -1;
-	dist_b = -1000000;
-	i = 0;
-	end_node = ft_lstlast(*lst_1);
-	if ((*lst_1)->cont->index > index && end_node->cont->index < index)
-		return (0);
-	else if (index > end_node->cont->index
-		&& (*lst_1)->cont->index < end_node->cont->index)
-		return (0);
-	tmp = *lst_1;
-	while (tmp)
-	{
-		if (tmp->next != NULL && tmp->next->cont->index < tmp->cont->index)
-		{
-			dist_t = i + 1;
-			dist_b = -(size - 1) + i;
-		}
-		if (tmp->next != NULL && tmp->cont->index < index
-			&& tmp->next->cont->index > index)
-		{
-			dist_t = i + 1;
-			dist_b = -(size - 1) + i;
-			break ;
-		}
-		tmp = tmp->next;
-		i++;
-	}
-	if (dist_t == -1 && dist_b == -1000000)
-		return (0);
-	if (dist_t > -(dist_b))
-		return (dist_b);
-	else
-		return (dist_t);
 }
