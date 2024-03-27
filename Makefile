@@ -16,8 +16,8 @@ CC = cc
 SRC =			push_swap.c			push_swap_utils.c		push_swap_lst_fncts_1.c	push_swap_lst_fncts_2.c	push_swap_lst_fncts_3.c \
 				push_swap_solve.c	push_swap_solve_utils_1.c	push_swap_solve_utils_2.c	push_swap_solve_utils_3.c
 MAIN_SRC =
-BONUS_SRC =		push_swap.c			push_swap_utils.c		push_swap_lst_fncts_1.c	push_swap_lst_fncts_2.c	push_swap_lst_fncts_3.c \
-				push_swap_bonus.c
+BONUS_SRC =		push_swap_bonus.c			push_swap_utils.c		push_swap_lst_fncts_1.c	push_swap_lst_fncts_2.c	push_swap_lst_fncts_3.c \
+				push_swap_bonus_utils.c
 TEST_SRC = test.sh
 HEADERS = push_swap.h libft.h
 LIBFT_SRC = libft.a

@@ -6,39 +6,11 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/25 15:54:10 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/27 17:13:47 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	ft_validate_args(char *str, int *valid)
-{
-	int		i;
-	long	nbr;
-
-	nbr = 0;
-	i = 0;
-	*valid = 1;
-	if (!str)
-		*valid = 0;
-	if (*valid != 0 && str[i] == '-')
-		i++;
-	while (*valid != 0 && str[i] != '\0')
-	{
-		if (str[i] >= '0' && str[i] <= '9')
-			i++;
-		else
-			*valid = 0;
-	}
-	if (valid != 0)
-		nbr = ft_atol(str);
-	if (valid != 0 && str[i] == '\0' && i <= 11 && nbr >= -2147483648
-		&& nbr <= 2147483647)
-		return ((int) nbr);
-	else
-		return (*valid = 0);
-}
 
 int	**ft_parse_several(int argc, char **argv)
 {
@@ -94,21 +66,41 @@ int	**ft_parse_one(char *input, int *size)
 	return (stack_a);
 }
 
+t_list	*ft_fill_lst(int **stack_a, int *size)
+{
+	t_list	*lst_a;
+	int		i;
+	int		sor_dup;
+
+	i = 0;
+	lst_a = ft_lstnew(ft_create_cont(stack_a[i++]));
+	while (i < *size)
+		ft_lstadd_back(&lst_a, ft_lstnew(ft_create_cont(stack_a[i++])));
+	sor_dup = ft_dup_sorted(lst_a);
+	if (sor_dup != 0)
+	{
+		if (sor_dup == -1)
+			ft_putstr_fd("Error\n", 2);
+		ft_lstfree(&lst_a);
+		ft_free((void **)stack_a, 0);
+		exit(3);
+	}
+	else
+		return (lst_a);
+}
+
 int	main(int argc, char **argv)
 {
 	int		**stack_a;
 	int		size;
+	int		error;
 
-	if (argc < 2)
-	{
-		ft_printf("ERROR\n");
+	size = 0;
+	error = 0;
+	if (argc < 2 || (argc == 2 && argv[1][0] == '\0'))
 		exit(1);
-	}
 	else if (argc == 2)
-	{
-		size = 0;
 		stack_a = ft_parse_one(argv[1], &size);
-	}
 	else
 	{
 		stack_a = ft_parse_several(argc, argv);
@@ -116,9 +108,9 @@ int	main(int argc, char **argv)
 	}
 	if (!stack_a)
 	{
-		ft_printf("ERROR\n");
+		ft_putstr_fd("Error\n", 2);
 		exit(2);
 	}
-	ft_switch(stack_a, &size);
-	return (1);
+	ft_solve(stack_a, &size);
+	return (0);
 }

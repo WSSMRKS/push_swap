@@ -3,104 +3,116 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wssmrks <wssmrks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/24 00:06:23 by wssmrks          ###   ########.fr       */
+/*   Updated: 2024/03/27 17:14:48 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_bonus.h"
 
-void	ft_switch(int **stack_a, int *size)
+int	**ft_parse_several(int argc, char **argv)
 {
-	ft_check(stack_a, size);
-	exit(1);
-}
+	int			i;
+	int			**stack_a;
+	int			valid;
 
-int	ft_ex_line(t_list **lst_a, t_list **lst_b, char *line)
-{
-	if (ft_strncmp(line, "sa\n", 4) == 0)
-		ft_sa(lst_a, 1);
-	else if (ft_strncmp(line, "sb\n", 4) == 0)
-		ft_sb(lst_b, 1);
-	else if (ft_strncmp(line, "ss\n", 4) == 0)
-		ft_ss(lst_a, lst_b, 1);
-	else if (ft_strncmp(line, "pb\n", 4) == 0)
-		ft_pb(lst_a, lst_b, 1);
-	else if (ft_strncmp(line, "pa\n", 4) == 0)
-		ft_pa(lst_a, lst_b, 1);
-	else if (ft_strncmp(line, "ra\n", 4) == 0)
-		ft_ra(lst_a, 1);
-	else if (ft_strncmp(line, "rb\n", 4) == 0)
-		ft_rb(lst_b, 1);
-	else if (ft_strncmp(line, "rr\n", 4) == 0)
-		ft_rr(lst_a, lst_b, 1);
-	else if (ft_strncmp(line, "rra\n", 5) == 0)
-		ft_rra(lst_a, 1);
-	else if (ft_strncmp(line, "rrb\n", 5) == 0)
-		ft_rrb(lst_b, 1);
-	else if (ft_strncmp(line, "rrr\n", 5) == 0)
-		ft_rrr(lst_a, lst_b, 1);
-	else
-		return (-1);
-	return (1);
-}
-
-void	ft_loop_lines(char *line, t_list **lst_a, t_list **lst_b)
-{
-	while (line)
+	stack_a = malloc(sizeof(int *) * (argc));
+	if (!stack_a)
+		return (NULL);
+	i = 0;
+	stack_a[argc - 1] = NULL;
+	while (i < (argc - 1))
 	{
-		if (ft_ex_line(lst_a, lst_b, line) == -1)
+		stack_a[i] = malloc(sizeof(int));
+		*stack_a[i] = ft_validate_args(argv[i + 1], &valid);
+		i++;
+		if (valid != 1)
 		{
-			ft_printf("KO! (instruction not known)\n");
-			free(line);
-			line = NULL;
-			if (lst_a)
-				ft_lstfree(lst_a);
-			if (lst_b)
-				ft_lstfree(lst_b);
-		}
-		else
-		{
-			free(line);
-			line = ft_get_next_line(0);
+			ft_free((void **)stack_a, 0);
+			return (NULL);
 		}
 	}
+	return (stack_a);
 }
 
-void	ft_checker(t_list **lst_a, t_list **lst_b)
+int	**ft_parse_one(char *input, int *size)
 {
-	char	*line;
-	int		dup_sorted;
+	char	**split;
+	int		**stack_a;
+	int		valid;
 
-	dup_sorted = 0;
-	dup_sorted = ft_dup_sorted(*lst_a);
-	line = ft_get_next_line(0);
-	if (dup_sorted == -1 && line == NULL)
-		ft_printf("ERROR(DUPLICATE)!\n");
-	else if (dup_sorted == 1 && line == NULL)
-		ft_printf("OK(SORTED)!\n");
-	else if (line)
-		ft_loop_lines(line, lst_a, lst_b);
-	if (ft_dup_sorted(*lst_a) == 1 && !*lst_b)
-		ft_printf("OK(SORTED through instructions)!\n");
-	else
-		ft_printf("KO! Not sorted after execution\n");
-	if (lst_a)
-		ft_lstfree(lst_a);
-	if (lst_b)
-		ft_lstfree(lst_b);
+	stack_a = malloc(sizeof(int *) * (ft_countwords(input, ' ') + 1));
+	if (!stack_a)
+		return (NULL);
+	split = ft_split(input, ' ');
+	if (!split)
+		return (NULL);
+	while (split[*size])
+	{
+		stack_a[*size] = malloc(sizeof(int));
+		*stack_a[*size] = ft_validate_args(split[*size], &valid);
+		if (valid != 1)
+		{
+			ft_free((void **)split, 0);
+			ft_free((void **)stack_a, *size);
+			return (NULL);
+		}
+		(*size)++;
+	}
+	ft_free((void **)split, 0);
+	stack_a[*size] = NULL;
+	return (stack_a);
 }
 
-void	ft_check(int **stack_a, int *size)
+t_list	*ft_fill_lst(int **stack_a, int *size)
 {
 	t_list	*lst_a;
-	t_list	*lst_b;
+	int		i;
+	int		sor_dup;
 
-	lst_a = ft_fill_lst(stack_a, size);
-	lst_b = NULL;
-	ft_checker(&lst_a, &lst_b);
-	ft_free((void **)stack_a, 0);
-	exit(1);
+	i = 0;
+	lst_a = ft_lstnew(ft_create_cont(stack_a[i++]));
+	while (i < *size)
+		ft_lstadd_back(&lst_a, ft_lstnew(ft_create_cont(stack_a[i++])));
+	sor_dup = ft_dup_sorted(lst_a);
+	if (sor_dup != 0)
+	{
+		if (sor_dup == -1)
+			ft_putstr_fd("Error\n", 2);
+		if (sor_dup == 1)
+			ft_putstr_fd("OK\n", 1);
+		ft_lstfree(&lst_a);
+		ft_free((void **)stack_a, 0);
+		exit(3);
+	}
+	else
+		return (lst_a);
+}
+
+int	main(int argc, char **argv)
+{
+	int		**stack_a;
+	int		size;
+	int		error;
+
+	size = 0;
+	error = 0;
+	if (argc < 2 || (argc == 2 && argv[1][0] == '\0'))
+		exit(1);
+	else if (argc == 2)
+		stack_a = ft_parse_one(argv[1], &size);
+	else
+	{
+		stack_a = ft_parse_several(argc, argv);
+		size = argc - 1;
+	}
+	if (!stack_a)
+	{
+		ft_putstr_fd("Error\n", 2);
+		exit(2);
+	}
+	ft_check(stack_a, &size, error);
+	return (1);
 }

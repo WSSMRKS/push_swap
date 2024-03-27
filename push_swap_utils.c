@@ -3,37 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wssmrks <wssmrks@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:19:56 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/23 21:27:48 by wssmrks          ###   ########.fr       */
+/*   Updated: 2024/03/27 17:13:39 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-t_list	*ft_fill_lst(int **stack_a, int *size)
-{
-	t_list	*lst_a;
-	int		i;
-	int		sor_dup;
-
-	i = 0;
-	lst_a = ft_lstnew(ft_create_cont(stack_a[i++]));
-	while (i < *size)
-		ft_lstadd_back(&lst_a, ft_lstnew(ft_create_cont(stack_a[i++])));
-	sor_dup = ft_dup_sorted(lst_a);
-	if (sor_dup != 0)
-	{
-		if (sor_dup == -1)
-			ft_putstr_fd("ERROR\n", 2);
-		ft_lstfree(&lst_a);
-		ft_free((void **)stack_a, 0);
-		exit(3);
-	}
-	else
-		return (lst_a);
-}
 
 t_cont	*ft_create_cont(int *val)
 {
@@ -100,23 +77,30 @@ int	ft_dup_sorted(t_list *lst_a)
 	return (ret);
 }
 
-// int	ft_sorted(t_list *lst_a)
-// {
-// 	long	value;
-// 	int		ret;
-// 	t_list	*tmp_a;
-// 	t_list	*tmp_b;
+int	ft_validate_args(char *str, int *valid)
+{
+	int		i;
+	long	nbr;
 
-// 	ret = 0;
-// 	tmp_a = lst_a;
-// 	value = -1 - INT_MIN;
-// 	while (tmp_a)
-// 	{
-// 		tmp_b = tmp_a->next;
-// 		if (value < *(long *)tmp_a->cont && ret != -1)
-// 			ret++;
-// 		value = *(long *)tmp_a->cont;
-// 		tmp_a = tmp_a->next;
-// 	}
-// 	return (ret);
-// }
+	nbr = 0;
+	i = 0;
+	*valid = 1;
+	if (!str || (str[i] == '-' && str[i + 1] == '\0'))
+		*valid = 0;
+	if (*valid != 0 && str[i] == '-')
+		i++;
+	while (*valid != 0 && str[i] != '\0')
+	{
+		if (str[i] >= '0' && str[i] <= '9')
+			i++;
+		else
+			*valid = 0;
+	}
+	if (valid != 0)
+		nbr = ft_atol(str);
+	if (valid != 0 && str[i] == '\0' && i <= 11 && nbr >= -2147483648
+		&& nbr <= 2147483647)
+		return ((int) nbr);
+	else
+		return (*valid = 0);
+}

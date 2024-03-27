@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:20:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/27 10:43:32 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/27 17:04:23 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ typedef struct s_cont
 {
 	int	value;
 	int	index;
-	int	pivot;
-	int	distance;
 	int	chunk;
 	int	price;
+	int	dist_b;
+	int	dist_a;
 }			t_cont;
 
 typedef struct s_list
@@ -35,21 +35,24 @@ typedef struct s_list
 }					t_list;
 
 t_list		*ft_lst2ndlast(t_list *lst);
-void		ft_pa(t_list **lst_a, t_list **lst_b, int silent);
-void		ft_pb(t_list **lst_a, t_list **lst_b, int silent);
-void		ft_sa(t_list **lst_a, int silent);
-void		ft_sb(t_list **lst_b, int silent);
-void		ft_ss(t_list **lst_a, t_list **lst_b, int silent);
-void		ft_ra(t_list **lst_a, int silent);
-void		ft_rb(t_list **lst_b, int silent);
-void		ft_rr(t_list **lst_a, t_list **lst_b, int silent);
-void		ft_rra(t_list **lst_a, int silent);
-void		ft_rrb(t_list **lst_b, int silent);
-void		ft_rrr(t_list **lst_a, t_list **lst_b, int silent);
+int			ft_pa(t_list **lst_a, t_list **lst_b, int silent);
+int			ft_pb(t_list **lst_a, t_list **lst_b, int silent);
+int			ft_sa(t_list **lst_a, int silent);
+int			ft_sb(t_list **lst_b, int silent);
+int			ft_ss(t_list **lst_a, t_list **lst_b, int silent);
+int			ft_ra(t_list **lst_a, int silent);
+int			ft_rb(t_list **lst_b, int silent);
+int			ft_rr(t_list **lst_a, t_list **lst_b, int silent);
+int			ft_rra(t_list **lst_a, int silent);
+int			ft_rrb(t_list **lst_b, int silent);
+int			ft_rrr(t_list **lst_a, t_list **lst_b, int silent);
 void		ft_free(void **tofree, int index);
 void		ft_lstfree(t_list **lst);
 int			ft_dup_sorted(t_list *lst_a);
 // int		ft_sorted(t_list *lst_a);
+int	**ft_parse_several(int argc, char **argv);
+int	**ft_parse_one(char *input, int *size);
+int	ft_validate_args(char *str, int *valid);
 t_list		*ft_fill_lst(int **stack_a, int *size);
 void		ft_solve(int **stack_a, int *size);
 void		ft_solve_3_l(t_list **lst_a);
@@ -57,7 +60,6 @@ void		ft_solve_3_r(t_list **lst_b);
 void		ft_solve_5(t_list **lst_a, t_list **lst_b, int *size, int chunks);
 void		ft_solve_10(t_list **lst_a, t_list **lst_b, int *size, int chunks);
 void		ft_solve_big(t_list **lst_a, t_list **lst_b, int *size, int chunks);
-void		ft_switch(int **stack_a, int *size);
 t_cont		*ft_create_cont(int *val);
 void		ft_calc_index(t_list **lst_a, int size);
 void		ft_assign_chunk(t_list **lst_a, int size, int chunks);
@@ -69,6 +71,7 @@ void		ft_push_val(t_list **lst_1, t_list **lst_2, int size_1, int size_2);
 void		ft_push_b(t_list **lst_a, t_list **lst_b, int size_a, int chunks);
 void		ft_push_a(t_list **lst_1, t_list **lst_2, int size_2);
 void		ft_0_top(t_list **lst_a);
+int			ft_calc_dist(int size, t_list **lst_a, int index);
 // libft content:
 int			ft_atoi(const char *nptr);
 long		ft_atol(const char *nptr);

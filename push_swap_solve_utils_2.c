@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/27 10:49:05 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/27 12:57:41 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,32 @@ int	ft_find_index(t_list **lst_1, int index, int size)
 	//solution for line issues. Make function that is returning the right distance. Pack it in return value.
 	int		dist_t;
 	int		dist_b;
-	int		i;
-	t_list	*tmp;
 	t_list	*end_node;
 
 	dist_t = -1;
 	dist_b = -1000000;
-	i = 0;
 	end_node = ft_lstlast(*lst_1);
-	if ((*lst_1)->cont->index > index && end_node->cont->index < index)
+	if ((*lst_1)->cont->index == index
+		|| ((*lst_1)->cont->index > index && end_node->cont->index < index))
 		return (0);
 	else if (index > end_node->cont->index
 		&& (*lst_1)->cont->index < end_node->cont->index)
 		return (0);
-	tmp = *lst_1;
+	else
+		return (ft_calc_dist(size, lst_1, index));
+}
+
+int	ft_calc_dist(int size, t_list **lst_a, int index)
+{
+	t_list	*tmp;
+	int		i;
+	int		dist_t;
+	int		dist_b;
+
+	dist_b = -1000000;
+	dist_t = -1;
+	i = 0;
+	tmp = *lst_a;
 	while (tmp)
 	{
 		if (tmp->next != NULL && tmp->next->cont->index < tmp->cont->index)

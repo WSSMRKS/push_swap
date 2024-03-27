@@ -6,17 +6,11 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/27 10:49:50 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/27 15:17:10 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	ft_switch(int **stack_a, int *size)
-{
-	ft_solve(stack_a, size);
-	exit(1);
-}
 
 void	ft_calc_index(t_list **lst_a, int size)
 {
