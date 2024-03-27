@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/27 15:17:10 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/27 17:54:00 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,31 @@ int	ft_chunks(int size)
 			chunks++;
 	}
 	return (chunks);
+}
+
+void	ft_push_a(t_list **lst_1, t_list **lst_2, int size_2)
+{
+	int		dist;
+	t_list	*tmp;
+
+	while (size_2 > 0)
+	{
+		tmp = *lst_2;
+		dist = ft_find_index(lst_1, tmp->cont->index);
+		while (dist != 0 && dist != -1000000)
+		{
+			if (dist < 0)
+			{
+				ft_rra(lst_1, 0);
+				dist++;
+			}
+			else
+			{
+				ft_ra(lst_1, 0);
+				dist--;
+			}
+		}
+		ft_pa(lst_1, lst_2, 0);
+		size_2--;
+	}
 }

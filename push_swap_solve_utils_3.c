@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/27 10:49:00 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/27 17:54:45 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_0_top(t_list **lst_a)
 {
 	int	dist;
 
-	dist = ft_find_index(lst_a, 0, ft_lstsize(*lst_a));
+	dist = ft_find_index(lst_a, 0);
 	while (dist != 0)
 	{
 		if (dist < 0)

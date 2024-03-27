@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:20:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/27 17:04:23 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/27 17:53:32 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void		ft_free(void **tofree, int index);
 void		ft_lstfree(t_list **lst);
 int			ft_dup_sorted(t_list *lst_a);
 // int		ft_sorted(t_list *lst_a);
-int	**ft_parse_several(int argc, char **argv);
-int	**ft_parse_one(char *input, int *size);
-int	ft_validate_args(char *str, int *valid);
+int			**ft_parse_several(int argc, char **argv);
+int			**ft_parse_one(char *input, int *size);
+int			ft_validate_args(char *str, int *valid);
 t_list		*ft_fill_lst(int **stack_a, int *size);
 void		ft_solve(int **stack_a, int *size);
 void		ft_solve_3_l(t_list **lst_a);
@@ -66,12 +66,12 @@ void		ft_assign_chunk(t_list **lst_a, int size, int chunks);
 int			ft_chunks(int size);
 int			ft_find_chunk(t_list **lst, int chunk, int size);
 void		ft_find_chunk_init(int *dist_b, int *dist_t, int *i, int *ch_done);
-int			ft_find_index(t_list **lst_1, int index, int size);
+int			ft_find_index(t_list **lst_1, int index);
 void		ft_push_val(t_list **lst_1, t_list **lst_2, int size_1, int size_2);
 void		ft_push_b(t_list **lst_a, t_list **lst_b, int size_a, int chunks);
 void		ft_push_a(t_list **lst_1, t_list **lst_2, int size_2);
 void		ft_0_top(t_list **lst_a);
-int			ft_calc_dist(int size, t_list **lst_a, int index);
+int			ft_calc_dist(t_list **lst_a, int index, int *dist_t, int *dist_b);
 // libft content:
 int			ft_atoi(const char *nptr);
 long		ft_atol(const char *nptr);

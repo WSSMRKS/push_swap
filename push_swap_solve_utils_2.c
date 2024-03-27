@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/27 12:57:41 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/03/27 17:57:33 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,8 @@ int	ft_find_chunk(t_list **lst, int chunk, int size)
 	return (dist_t);
 }
 
-int	ft_find_index(t_list **lst_1, int index, int size)
+int	ft_find_index(t_list **lst_1, int index)
 {
-	//solution for line issues. Make function that is returning the right distance. Pack it in return value.
 	int		dist_t;
 	int		dist_b;
 	t_list	*end_node;
@@ -64,44 +63,42 @@ int	ft_find_index(t_list **lst_1, int index, int size)
 	else if (index > end_node->cont->index
 		&& (*lst_1)->cont->index < end_node->cont->index)
 		return (0);
-	else
-		return (ft_calc_dist(size, lst_1, index));
-}
-
-int	ft_calc_dist(int size, t_list **lst_a, int index)
-{
-	t_list	*tmp;
-	int		i;
-	int		dist_t;
-	int		dist_b;
-
-	dist_b = -1000000;
-	dist_t = -1;
-	i = 0;
-	tmp = *lst_a;
-	while (tmp)
-	{
-		if (tmp->next != NULL && tmp->next->cont->index < tmp->cont->index)
-		{
-			dist_t = i + 1;
-			dist_b = -(size - 1) + i;
-		}
-		if (tmp->next != NULL && tmp->cont->index < index
-			&& tmp->next->cont->index > index)
-		{
-			dist_t = i + 1;
-			dist_b = -(size - 1) + i;
-			break ;
-		}
-		tmp = tmp->next;
-		i++;
-	}
+	ft_calc_dist(lst_1, index, &dist_t, &dist_b);
 	if (dist_t == -1 && dist_b == -1000000)
 		return (0);
 	if (dist_t > -(dist_b))
 		return (dist_b);
 	else
 		return (dist_t);
+}
+
+int	ft_calc_dist(t_list **lst_a, int index, int *dist_t, int *dist_b)
+{
+	t_list	*tmp;
+	int		i;
+	int		size;
+
+	i = 0;
+	tmp = *lst_a;
+	size = ft_lstsize(*lst_a);
+	while (tmp)
+	{
+		if (tmp->next != NULL && tmp->next->cont->index < tmp->cont->index)
+		{
+			*dist_t = i + 1;
+			*dist_b = -(size - 1) + i;
+		}
+		if (tmp->next != NULL && tmp->cont->index < index
+			&& tmp->next->cont->index > index)
+		{
+			*dist_t = i + 1;
+			*dist_b = -(size - 1) + i;
+			break ;
+		}
+		tmp = tmp->next;
+		i++;
+	}
+	return (0);
 }
 
 void	ft_push_b(t_list **lst_a, t_list **lst_b, int size_a, int chunks)
@@ -130,32 +127,5 @@ void	ft_push_b(t_list **lst_a, t_list **lst_b, int size_a, int chunks)
 		if (dist == 0)
 			ft_pb(lst_a, lst_b, 0);
 		size_a = ft_lstsize(*lst_a);
-	}
-}
-
-void	ft_push_a(t_list **lst_1, t_list **lst_2, int size_2)
-{
-	int		dist;
-	t_list	*tmp;
-
-	while (size_2 > 0)
-	{
-		tmp = *lst_2;
-		dist = ft_find_index(lst_1, tmp->cont->index, ft_lstsize(*lst_1));
-		while (dist != 0 && dist != -1000000)
-		{
-			if (dist < 0)
-			{
-				ft_rra(lst_1, 0);
-				dist++;
-			}
-			else
-			{
-				ft_ra(lst_1, 0);
-				dist--;
-			}
-		}
-		ft_pa(lst_1, lst_2, 0);
-		size_2--;
 	}
 }
