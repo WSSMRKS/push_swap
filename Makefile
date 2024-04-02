@@ -5,7 +5,10 @@ OBJDIR =
 LIBFTDIR = libft/
 # Names #
 NAME = push_swap
-BONUS_NAME= checker
+BONUS_NAME = checker
+VISU = push_swap_visualizer
+TESTER1 = 42_push_swap_tester
+TESTER2 = Push-Swap-Tester
 # MAIN_NAME = push_swap
 # Compiler & COptions & CFlags #
 CFLAGS = -g -Werror -Wall -Wextra
@@ -28,12 +31,14 @@ BONUS_OBJ = $(BONUS_SRC:.c=.o)
 MAIN_OBJ = $(MAIN_SRC:.c=.o)
 TEST_OBJ = $(TEST_SRC:.c=.o)
 
-# push_swap_visualizer #
-VISDIR = push_swap_visualizer/
-TESTDIR = Push-Swap-Tester/
+# Testers #
+TESTDIR1 = $(TESTER1)/
+TESTDIR2 = $(TESTER2)/
+VISDIR = $(VISU)/
+
 
 # Targets #
-all : $(NAME)
+all: $(NAME) bonus tester1 tester2 visu
 
 $(NAME): libft $(SRC_OBJ)
 	$(CC) $(CFLAGS) $(SRC_OBJ) $(LIBFT_SRC) -o $(NAME)
@@ -54,17 +59,42 @@ libft:
 
 ex: $(NAME) clean
 
-tester:
-  ifeq ("$(wildcard $(TESTDIR))", "")
-	@echo "tester not yet cloned"
+tester1:
+  ifeq ("$(wildcard $(TESTDIR1))", "")
+	@echo "cloning $(TESTER1)"
+	git clone git@github.com:WSSMRKS/42_push_swap_tester.git
+  else
+	@echo "tester already cloned"
+	@echo "starting $(TESTER1)"
+#	bash push_swap_test_linux.sh
+  endif
+
+rm_tester1:
+	rm -rf $(TESTDIR1)
+#	rm -f push_swap_test_linux.sh
+
+tester2:
+  ifeq ("$(wildcard $(TESTDIR2))", "")
+	@echo "cloning $(TESTER2)"
 	git clone https://github.com/gemartin99/Push-Swap-Tester.git
 	cp Push-Swap-Tester/push_swap_test_linux.sh ./
   else
-	@echo "visualizer already cloned"
+	@echo "running $(TESTER2)"bonus
 	bash push_swap_test_linux.sh
   endif
 
-rm_tester:
+tester2_bonus:
+  ifeq ("$(wildcard $(TESTDIR2))", "")
+	@echo "cloning $(TESTER2)"
+	git clone https://github.com/gemartin99/Push-Swap-Tester.git
+	cp Push-Swap-Tester/push_swap_test_linux.sh ./
+  else
+	@echo "running $(TESTER2) for bonus"
+	bash push_swap_test_linux.sh -b
+  endif
+
+
+rm_tester2:
 	rm -rf Push-Swap-Tester
 	rm -f push_swap_test_linux.sh
 
@@ -92,9 +122,6 @@ rm_visu:
 	rm -rf push_swap_visualizer
 
 
-test: $(NAME)
-	@$(CC) $(TESTFLAGS) $(MAIN_SRC) $(SRC) $(TEST_SRC) -o $(MAIN_NAME)
-	@echo "test command sucessfully executed. Executable is called \"$(MAIN_NAME)\"!"
 
 # test_strict: $(MAIN_OBJ) $(NAME) $(TEST_OBJ)
 # 	@$(CC) $(CFLAGS) $(MAIN_OBJ) $(SRC_OBJ) $(TEST_OBJ) -o $(MAIN_NAME)
@@ -125,7 +152,7 @@ clean:
 	@rm -f libft.a
 	@rm -f libft.h
 
-fclean: clean
+fclean: clean rm_tester1 rm_tester2 rm_visu
 	@rm -f $(NAME) $(MAIN_NAME) $(BONUS_NAME)
 	@echo "\"$(NAME)\" deleted"
 
@@ -148,7 +175,3 @@ help:
 	@echo "libft --> Compile libft and copy libft.h and libft.a to project folder"
 
 .PHONY: all name test test_strict run bonus debug fclean clean re help libft
-
-
-# End comments on how to compile ft_printf with a new project:
-# prerequisites: libftprintf.a ft_printf.h
