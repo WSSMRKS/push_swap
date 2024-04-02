@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/27 18:18:38 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/02 15:18:39 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,30 @@
 
 void	ft_calc_index(t_list **lst_a, int size)
 {
-	int			min;
-	long int	min_o;
 	int			index;
-	t_list		*tmp_a;
-	t_list		*tmp_min;
+	t_list		*tmp;
+	t_list		*m_o;
+	t_list		*m;
 
 	index = 0;
-	min_o = (long)-INT_MAX -2;
+	m_o = NULL;
 	while (index < size)
 	{
-		tmp_min = NULL;
-		min = INT_MAX;
-		tmp_a = *lst_a;
-		while (tmp_a)
+		m = NULL;
+		tmp = *lst_a;
+		while (tmp)
 		{
-			if ((tmp_min == NULL && (long) tmp_a->cont->value > min_o) || (tmp_a->cont->value <= tmp_min->cont->value && (long) tmp_a->cont->value > min_o))
-				tmp_min = tmp_a;
-			tmp_a = tmp_a->next;
+			if ((m == NULL && (m_o == NULL
+						|| tmp->cont->value > m_o->cont->value)))
+				m = tmp;
+			if (m != NULL && (tmp->cont->value <= m->cont->value
+					&& (m_o == NULL || tmp->cont->value > m_o->cont->value)))
+				m = tmp;
+			tmp = tmp->next;
 		}
-		tmp_min->cont->index = index++;
-		ft_assign_chunk(&tmp_min, size, ft_chunks(size));
-		min_o = tmp_min->cont->value;
+		m->cont->index = index++;
+		ft_assign_chunk(&m, size, ft_chunks(size));
+		m_o = m;
 	}
 }
 
