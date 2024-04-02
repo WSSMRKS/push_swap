@@ -82,7 +82,7 @@ rm_checker:
 	@rm -rf $(CHECKER)
 	@echo "provided checker_linux removed"
 
-tester1:
+tester1: dl_checker
   ifeq ("$(wildcard $(TESTDIR1))", "")
 	@echo "cloning $(TESTER1)"
 	git clone git@github.com:WSSMRKS/42_push_swap_tester.git
@@ -97,7 +97,7 @@ rm_tester1:
 #	@rm -f push_swap_test_linux.sh
 	@echo "$(TESTER1) removed"
 
-tester2:
+tester2: dl_checker
   ifeq ("$(wildcard $(TESTDIR2))", "")
 	@echo "cloning $(TESTER2)"
 	git clone https://github.com/gemartin99/Push-Swap-Tester.git
@@ -121,6 +121,7 @@ tester2_bonus:
 rm_tester2:
 	@rm -rf Push-Swap-Tester
 	@rm -f push_swap_test_linux.sh
+	@rm -f traces.txt
 	@echo "$(TESTER2) removed"
 
 visu:
