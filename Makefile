@@ -23,7 +23,7 @@ BONUS_SRC =		push_swap_bonus.c			push_swap_utils.c		push_swap_lst_fncts_1.c	push
 TEST_SRC = test.sh
 HEADERS = push_swap.h libft.h
 LIBFT_SRC = libft.a
-# Object Files #
+# Object Files #remove
 SRC_OBJ = $(SRC:.c=.o)
 BONUS_OBJ = $(BONUS_SRC:.c=.o)
 MAIN_OBJ = $(MAIN_SRC:.c=.o)
@@ -37,7 +37,7 @@ VISDIR = $(VISU)/
 # Targets #
 all: $(NAME) bonus
 
-fully: $(NAME) bonus tester1 tester2 visu
+fully: $(NAME) bonus dl_checker tester1 tester2 visu
 
 $(NAME): libft $(SRC_OBJ)
 	$(CC) $(CFLAGS) $(SRC_OBJ) $(LIBFT_SRC) -o $(NAME)
@@ -73,6 +73,7 @@ dl_checker:
   ifeq ("$(wildcard $(CHECKER))", "")
 	@echo "downloading provided checker_linux"
 	wget https://cdn.intra.42.fr/document/document/24664/checker_linux
+	chmod +x checker_linux
   else
 	@echo "checker_linux already there"
   endif
@@ -161,7 +162,7 @@ clean:
 	@rm -f libft.a
 	@rm -f libft.h
 
-fclean: clean rm_tester1 rm_tester2 rm_visu
+fclean: clean rm_tester1 rm_tester2 rm_visu rm_checker
 	@rm -f $(NAME) $(MAIN_NAME) $(BONUS_NAME)
 	@echo "\"$(NAME)\" deleted"
 
@@ -173,7 +174,8 @@ name:
 help:
 	@echo "Possible Commands:"
 	@echo "all --> Compile whole project including bonus"
-	@echo "fully --> Whole projects including testers and visualizer"
+	@echo "fully --> first time: compile whole projects including testers and visualizer"
+	@echo "fully --> second time: compile whole project and run testers and visualizer"
 	@echo "name --> Display project name"
 	@echo "bonus --> Compile bonus"
 	@echo "dl_checker --> download checker_linux provided with subject"
