@@ -9,7 +9,6 @@ BONUS_NAME = checker
 VISU = push_swap_visualizer
 TESTER1 = 42_push_swap_tester
 TESTER2 = Push-Swap-Tester
-# MAIN_NAME = push_swap
 # Compiler & COptions & CFlags #
 CFLAGS = -g -Werror -Wall -Wextra
 TESTFLAGS = -g3
@@ -24,21 +23,21 @@ BONUS_SRC =		push_swap_bonus.c			push_swap_utils.c		push_swap_lst_fncts_1.c	push
 TEST_SRC = test.sh
 HEADERS = push_swap.h libft.h
 LIBFT_SRC = libft.a
-
 # Object Files #
 SRC_OBJ = $(SRC:.c=.o)
 BONUS_OBJ = $(BONUS_SRC:.c=.o)
 MAIN_OBJ = $(MAIN_SRC:.c=.o)
 TEST_OBJ = $(TEST_SRC:.c=.o)
-
-# Testers #
+# Tester directorys #
 TESTDIR1 = $(TESTER1)/
 TESTDIR2 = $(TESTER2)/
 VISDIR = $(VISU)/
 
 
 # Targets #
-all: $(NAME) bonus tester1 tester2 visu
+all: $(NAME) bonus
+
+fully: $(NAME) bonus tester1 tester2 visu
 
 $(NAME): libft $(SRC_OBJ)
 	$(CC) $(CFLAGS) $(SRC_OBJ) $(LIBFT_SRC) -o $(NAME)
@@ -57,21 +56,45 @@ libft:
 	@cp -rf libft/libft.a ./
   endif
 
+exes: $(NAME) bonus clean
+
 ex: $(NAME) clean
+
+ex_bonus: bonus clean
+
+# Compile .c to .o #
+%.o: %.c
+	@$(CC) $(CFLAGS) $(COPTIONS) $^ -o $@
+
+# Checkers, Testers #
+CHECKER = checker_linux
+
+dl_checker:
+  ifeq ("$(wildcard $(CHECKER))", "")
+	@echo "downloading provided checker_linux"
+	wget https://cdn.intra.42.fr/document/document/24664/checker_linux
+  else
+	@echo "checker_linux already there"
+  endif
+
+rm_checker:
+	@rm -rf $(CHECKER)
+	@echo "provided checker_linux removed"
 
 tester1:
   ifeq ("$(wildcard $(TESTDIR1))", "")
 	@echo "cloning $(TESTER1)"
 	git clone git@github.com:WSSMRKS/42_push_swap_tester.git
   else
-	@echo "tester already cloned"
+	@echo "tester1 already cloned"
 	@echo "starting $(TESTER1)"
-#	bash push_swap_test_linux.sh
+	bash $(TESTDIR1)/test.sh
   endif
 
 rm_tester1:
-	rm -rf $(TESTDIR1)
-#	rm -f push_swap_test_linux.sh
+	@rm -rf $(TESTDIR1)
+#	@rm -f push_swap_test_linux.sh
+	@echo "$(TESTER1) removed"
 
 tester2:
   ifeq ("$(wildcard $(TESTDIR2))", "")
@@ -79,7 +102,7 @@ tester2:
 	git clone https://github.com/gemartin99/Push-Swap-Tester.git
 	cp Push-Swap-Tester/push_swap_test_linux.sh ./
   else
-	@echo "running $(TESTER2)"bonus
+	@echo "running $(TESTER2) with bonus"
 	bash push_swap_test_linux.sh
   endif
 
@@ -95,8 +118,9 @@ tester2_bonus:
 
 
 rm_tester2:
-	rm -rf Push-Swap-Tester
-	rm -f push_swap_test_linux.sh
+	@rm -rf Push-Swap-Tester
+	@rm -f push_swap_test_linux.sh
+	@echo "$(TESTER2) removed"
 
 visu:
   ifeq ("$(wildcard $(VISDIR))", "")
@@ -119,24 +143,9 @@ visu:
   endif
 
 rm_visu:
-	rm -rf push_swap_visualizer
+	@rm -rf push_swap_visualizer
+	@echo "$(VISU) removed"
 
-
-
-# test_strict: $(MAIN_OBJ) $(NAME) $(TEST_OBJ)
-# 	@$(CC) $(CFLAGS) $(MAIN_OBJ) $(SRC_OBJ) $(TEST_OBJ) -o $(MAIN_NAME)
-# 	@echo "test command sucessfully executed. Executable is called \"$(MAIN_NAME)\"!"
-
-# run: fclean test
-# 	@echo "\"a.out\" execution below!"
-# 	@./a.out
-
-# debug: fclean test bonus
-# 	gdb ./a.out
-
-#Compile .c to .o #
-%.o: %.c
-	@$(CC) $(CFLAGS) $(COPTIONS) $^ -o $@
 
 clean:
 	@rm -f $(SRC_OBJ)
@@ -163,15 +172,23 @@ name:
 
 help:
 	@echo "Possible Commands:"
-	@echo "all --> Compile whole project"
+	@echo "all --> Compile whole project including bonus"
+	@echo "fully --> Whole projects including testers and visualizer"
 	@echo "name --> Display project name"
-#	@echo "bonus --> Compile bonus if available project"
-#	@echo "test --> Compile main if available"
-#	@echo "run --> Run main if available"
-#	@echo "debug --> Run GDB with a.out"
+	@echo "bonus --> Compile bonus"
+	@echo "dl_checker --> download checker_linux provided with subject"
+	@echo "tester1 --> first time: git clone 42_push_swap_tester by wssmrks (me)"
+	@echo "tester1 --> second time: Run 42_push_swap_tester by wssmrks (me)"
+	@echo "tester2 --> first time: git clone Push-Swap-Tester by gemartin99"
+	@echo "tester2 --> second time: Run Push-Swap-Tester by gemartin99"
+	@echo "visu --> git clone and make push_swap_visualizer by o-reo"
 	@echo "clean --> Delete all object files"
 	@echo "fclean --> Delete everything besides source files"
 	@echo "re --> recompile everything (fclean, all)"
 	@echo "libft --> Compile libft and copy libft.h and libft.a to project folder"
+	@echo "rm_tester1 --> remove 42_push_swap_tester by wssmrks (me)"
+	@echo "rm_tester2 --> remove Push-Swap-Tester by gemartin99"
+	@echo "rm_visu --> remove push_swap_visualizer by o-reo"
+	@echo "rm_checker --> remove checker_linux provided with subject"
 
 .PHONY: all name test test_strict run bonus debug fclean clean re help libft
