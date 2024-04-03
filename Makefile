@@ -122,6 +122,7 @@ rm_tester2:
 	@rm -rf Push-Swap-Tester
 	@rm -f push_swap_test_linux.sh
 	@rm -f traces.txt
+	@rm -f 0
 	@echo "$(TESTER2) removed"
 
 visu:
