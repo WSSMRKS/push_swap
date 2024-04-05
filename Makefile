@@ -10,7 +10,7 @@ VISU = push_swap_visualizer
 TESTER1 = 42_push_swap_tester
 TESTER2 = Push-Swap-Tester
 # Compiler & COptions & CFlags #
-CFLAGS = -g -Werror -Wall -Wextra
+CFLAGS = -Werror -Wall -Wextra
 TESTFLAGS = -g3
 COPTIONS = -c
 CC = cc
@@ -39,13 +39,15 @@ all: $(NAME) bonus
 
 fully: $(NAME) bonus dl_checker tester1 tester2 visu
 
-$(NAME): libft $(SRC_OBJ)
+$(NAME): $(LIBFT_SRC) $(SRC_OBJ)
 	$(CC) $(CFLAGS) $(SRC_OBJ) $(LIBFT_SRC) -o $(NAME)
 
-bonus: libft $(BONUS_OBJ)
+bonus: $(BONUS_NAME)
+
+$(BONUS_NAME): $(LIBFT_SRC) $(BONUS_OBJ)
 	$(CC) $(CFLAGS) $(BONUS_OBJ) $(LIBFT_SRC) -o $(BONUS_NAME)
 
-libft:
+$(LIBFT_SRC):
   ifeq ("$(wildcard $(LIBFTDIR))", "")
 	@echo "Directory does not exist."
 #	@git submodule add git@github.com:WSSMRKS/libft.git
@@ -67,10 +69,10 @@ ex_bonus: bonus clean
 	@$(CC) $(CFLAGS) $(COPTIONS) $^ -o $@
 
 # Checkers, Testers #
-CHECKER = checker_linux
+CHECKER_LINUX = checker_linux
 
 dl_checker:
-  ifeq ("$(wildcard $(CHECKER))", "")
+  ifeq ("$(wildcard $(CHECKER_LINUX))", "")
 	@echo "downloading provided checker_linux"
 	wget https://cdn.intra.42.fr/document/document/24664/checker_linux
 	chmod +x checker_linux
@@ -79,7 +81,7 @@ dl_checker:
   endif
 
 rm_checker:
-	@rm -rf $(CHECKER)
+	@rm -rf $(CHECKER_LINUX)
 	@echo "provided checker_linux removed"
 
 tester1: dl_checker
@@ -195,4 +197,4 @@ help:
 	@echo "rm_visu --> remove push_swap_visualizer by o-reo"
 	@echo "rm_checker --> remove checker_linux provided with subject"
 
-.PHONY: all name test test_strict run bonus debug fclean clean re help libft
+.PHONY: all fclean clean re
