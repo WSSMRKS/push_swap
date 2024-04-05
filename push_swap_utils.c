@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:19:56 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/27 17:13:39 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/05 12:31:32 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ t_cont	*ft_create_cont(int *val)
 	t_cont	*l_obj;
 
 	l_obj = malloc(sizeof(t_cont));
+	if (l_obj == NULL)
+		return (NULL);
 	l_obj->value = *val;
 	l_obj->index = 0;
 	l_obj->chunk = 0;

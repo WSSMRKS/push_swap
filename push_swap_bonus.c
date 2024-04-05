@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/27 17:14:48 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/05 13:03:14 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ int	**ft_parse_several(int argc, char **argv)
 	while (i < (argc - 1))
 	{
 		stack_a[i] = malloc(sizeof(int));
+		if (stack_a[i] == NULL)
+			ft_free((void **)stack_a, 0);
+		if (stack_a[i] == NULL)
+			return (NULL);
 		*stack_a[i] = ft_validate_args(argv[i + 1], &valid);
 		i++;
 		if (valid != 1)
@@ -52,14 +56,14 @@ int	**ft_parse_one(char *input, int *size)
 	while (split[*size])
 	{
 		stack_a[*size] = malloc(sizeof(int));
-		*stack_a[*size] = ft_validate_args(split[*size], &valid);
-		if (valid != 1)
+		if (stack_a[*size] != NULL)
+			*stack_a[*size] = ft_validate_args(split[*size], &valid);
+		if (stack_a[(*size)++] == NULL || valid != 1)
 		{
 			ft_free((void **)split, 0);
 			ft_free((void **)stack_a, *size);
 			return (NULL);
 		}
-		(*size)++;
 	}
 	ft_free((void **)split, 0);
 	stack_a[*size] = NULL;
@@ -99,20 +103,20 @@ int	main(int argc, char **argv)
 
 	size = 0;
 	error = 0;
-	if (argc < 2 || (argc == 2 && argv[1][0] == '\0'))
+	if (argc < 2)
 		exit(1);
-	else if (argc == 2)
+	else if (argc == 2 && argv[1][0] != '\0')
 		stack_a = ft_parse_one(argv[1], &size);
-	else
+	else if (argv[1][0] != '\0')
 	{
 		stack_a = ft_parse_several(argc, argv);
 		size = argc - 1;
 	}
-	if (!stack_a)
+	if (argv[1][0] == '\0' || stack_a == NULL)
 	{
 		ft_putstr_fd("Error\n", 2);
 		exit(2);
 	}
 	ft_check(stack_a, &size, error);
-	return (1);
+	return (0);
 }
