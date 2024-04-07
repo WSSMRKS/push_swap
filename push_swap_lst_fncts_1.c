@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:19:56 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/27 14:36:41 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/07 15:47:34 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_sa(t_list **lst_a, int silent)
 {
 	t_list	*node;
 
-	if (*lst_a == NULL)
+	if (*lst_a == NULL || (*lst_a)->next == NULL)
 		return (1);
 	node = (*lst_a)->next;
 	(*lst_a)->next = (*lst_a)->next->next;
@@ -75,7 +75,7 @@ int	ft_sb(t_list **lst_b, int silent)
 {
 	t_list	*node;
 
-	if (*lst_b == NULL)
+	if (*lst_b == NULL || (*lst_b)->next == NULL)
 		return (1);
 	node = (*lst_b)->next;
 	(*lst_b)->next = (*lst_b)->next->next;

@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/04/05 13:03:14 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/07 16:04:49 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ t_list	*ft_fill_lst(int **stack_a, int *size)
 	while (i < *size)
 		ft_lstadd_back(&lst_a, ft_lstnew(ft_create_cont(stack_a[i++])));
 	sor_dup = ft_dup_sorted(lst_a);
-	if (sor_dup != 0)
+	if (sor_dup == -1 || (sor_dup == 1 && *size == 1))
 	{
 		if (sor_dup == -1)
 			ft_putstr_fd("Error\n", 2);
-		if (sor_dup == 1)
+		if (sor_dup == 1 && *size == 1)
 			ft_putstr_fd("OK\n", 1);
 		ft_lstfree(&lst_a);
 		ft_free((void **)stack_a, 0);
