@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:20:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/03/27 17:53:32 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/07 20:26:43 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_cont
 	int	value;
 	int	index;
 	int	chunk;
-	int	price;
+	int	target;
 	int	dist_b;
 	int	dist_a;
 }			t_cont;
@@ -72,6 +72,10 @@ void		ft_push_b(t_list **lst_a, t_list **lst_b, int size_a, int chunks);
 void		ft_push_a(t_list **lst_1, t_list **lst_2, int size_2);
 void		ft_0_top(t_list **lst_a);
 int			ft_calc_dist(t_list **lst_a, int index, int *dist_t, int *dist_b);
+void		ft_turn(t_list **lst, int dist);
+int			ft_cheapest(t_list **lst_b);
+void		ft_dist(t_list **lst_b, int size_b, t_list **lst_a);
+int			ft_finish_b(t_list **lst_a, t_list **lst_b);
 // libft content:
 int			ft_atoi(const char *nptr);
 long		ft_atol(const char *nptr);
@@ -124,5 +128,8 @@ int			ft_pnb_b_fd_s(int nbr, char *base, int fd, int negp);
 int			ft_putstr_fd_ret(char *s, int fd);
 int			ft_putchar_fd_ret(char c, int fd);
 char		*ft_get_next_line(int fd);
+void		ft_putstr_non_printable(char *str, size_t n);
+int			ft_abs(int a);
+
 
 #endif
