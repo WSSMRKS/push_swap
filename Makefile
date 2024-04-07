@@ -84,6 +84,22 @@ rm_checker:
 	@rm -rf $(CHECKER_LINUX)
 	@echo "provided checker_linux removed"
 
+test:
+  ifeq ("$(wildcard $(TESTDIR1))", "")
+	@echo "$(TESTER1) not yet installed"
+  else
+	@echo "running $(TESTER1)"
+	bash $(TESTDIR1)/test.sh
+  endif
+  ifeq ("$(wildcard $(TESTDIR2))", "")
+	@echo "$(TESTER2) not yet installed"
+  else
+	@echo "running $(TESTER2)"
+	bash push_swap_test_linux.sh
+	@echo "running $(TESTER2) with bonus"
+	bash push_swap_test_linux.sh -b
+  endif
+
 tester1: dl_checker
   ifeq ("$(wildcard $(TESTDIR1))", "")
 	@echo "cloning $(TESTER1)"
@@ -182,6 +198,7 @@ help:
 	@echo "fully --> second time: compile whole project and run testers and visualizer"
 	@echo "name --> Display project name"
 	@echo "bonus --> Compile bonus"
+	@echo "test" --> run all available tests"
 	@echo "dl_checker --> download checker_linux provided with subject"
 	@echo "tester1 --> first time: git clone 42_push_swap_tester by wssmrks (me)"
 	@echo "tester1 --> second time: Run 42_push_swap_tester by wssmrks (me)"

@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/04/07 15:41:57 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/07 18:24:38 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_loop_lines(char *line, t_list **lst_a, t_list **lst_b)
 	return (0);
 }
 
-void	ft_checker(t_list **lst_a, t_list **lst_b, int error)
+void	ft_checker(t_list **lst_a, t_list **lst_b)
 {
 	char	*line;
 	int		dup_sorted;
@@ -69,30 +69,29 @@ void	ft_checker(t_list **lst_a, t_list **lst_b, int error)
 		ft_putstr_fd("Error\n", 2);
 	else if (dup_sorted == 1 && line == NULL)
 		ft_printf("OK\n");
-	else if (error == 1 && line != NULL)
-		ft_printf("KO\n");
 	else if (line)
+	{
 		res = ft_loop_lines(line, lst_a, lst_b);
-	if (*lst_a && ft_dup_sorted(*lst_a) == 1 && !*lst_b && res == 0)
-		ft_printf("OK\n");
-	else
-		ft_printf("KO\n");
+		if (*lst_a && ft_dup_sorted(*lst_a) == 1 && !*lst_b && res == 0)
+			ft_printf("OK\n");
+		else
+			ft_printf("KO\n");
+	}
 	if (lst_a)
 		ft_lstfree(lst_a);
 	if (lst_b)
 		ft_lstfree(lst_b);
 }
 
-void	ft_check(int **stack_a, int *size, int error)
+void	ft_check(int **stack_a, int *size)
 {
 	t_list	*lst_a;
 	t_list	*lst_b;
 
 	lst_a = NULL;
 	lst_b = NULL;
-	if (error == 0)
-		lst_a = ft_fill_lst(stack_a, size);
-	ft_checker(&lst_a, &lst_b, error);
+	lst_a = ft_fill_lst(stack_a, size);
+	ft_checker(&lst_a, &lst_b);
 	ft_free((void **)stack_a, 0);
 	exit(1);
 }

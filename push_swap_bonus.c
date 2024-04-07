@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/04/07 16:04:49 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/07 18:25:09 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,8 @@ int	main(int argc, char **argv)
 {
 	int		**stack_a;
 	int		size;
-	int		error;
 
 	size = 0;
-	error = 0;
 	if (argc < 2)
 		exit(1);
 	else if (argc == 2 && argv[1][0] != '\0')
@@ -117,6 +115,6 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("Error\n", 2);
 		exit(2);
 	}
-	ft_check(stack_a, &size, error);
+	ft_check(stack_a, &size);
 	return (0);
 }
