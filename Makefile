@@ -10,7 +10,7 @@ VISU = push_swap_visualizer
 TESTER1 = 42_push_swap_tester
 TESTER2 = Push-Swap-Tester
 # Compiler & COptions & CFlags #
-CFLAGS = -Werror -Wall -Wextra
+CFLAGS = -g -Werror -Wall -Wextra
 TESTFLAGS = -g3
 COPTIONS = -c
 CC = cc
