@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/04/07 18:24:38 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/08 17:12:45 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_ex_line(t_list **lst_a, t_list **lst_b, char *line)
 	else if (ft_strncmp(line, "rrr\n", 5) == 0)
 		return (ft_rrr(lst_a, lst_b, 1));
 	else
-		return (1);
+		return (2);
 }
 
 int	ft_loop_lines(char *line, t_list **lst_a, t_list **lst_b)
@@ -45,7 +45,7 @@ int	ft_loop_lines(char *line, t_list **lst_a, t_list **lst_b)
 	while (line)
 	{
 		if (ft_ex_line(lst_a, lst_b, line) != 0)
-			return (1);
+			return (ft_ex_line(lst_a, lst_b, line));
 		else
 		{
 			free(line);
@@ -74,6 +74,8 @@ void	ft_checker(t_list **lst_a, t_list **lst_b)
 		res = ft_loop_lines(line, lst_a, lst_b);
 		if (*lst_a && ft_dup_sorted(*lst_a) == 1 && !*lst_b && res == 0)
 			ft_printf("OK\n");
+		else if (res == 2)
+			ft_printf("Error\n");
 		else
 			ft_printf("KO\n");
 	}
