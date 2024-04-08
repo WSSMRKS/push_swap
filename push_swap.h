@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:20:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/04/07 20:26:43 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/08 12:15:02 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,11 @@ void		ft_push_b(t_list **lst_a, t_list **lst_b, int size_a, int chunks);
 void		ft_push_a(t_list **lst_1, t_list **lst_2, int size_2);
 void		ft_0_top(t_list **lst_a);
 int			ft_calc_dist(t_list **lst_a, int index, int *dist_t, int *dist_b);
-void		ft_turn(t_list **lst, int dist);
+int			ft_turn(t_list **lst, int dist);
 int			ft_cheapest(t_list **lst_b);
 void		ft_dist(t_list **lst_b, int size_b, t_list **lst_a);
 int			ft_finish_b(t_list **lst_a, t_list **lst_b);
+int			ft_find_target(t_list **lst_a, int index);
 // libft content:
 int			ft_atoi(const char *nptr);
 long		ft_atol(const char *nptr);
