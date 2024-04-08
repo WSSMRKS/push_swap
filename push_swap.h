@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:20:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/04/08 16:15:49 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/08 16:34:32 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int			ft_validate_args(char *str, int *valid);
 t_list		*ft_fill_lst(int **stack_a, int *size);
 void		ft_solve(int **stack_a, int *size);
 void		ft_solve_3_l(t_list **lst_a);
-void		ft_solve_3_r(t_list **lst_b);
 void		ft_solve_5(t_list **lst_a, t_list **lst_b, int *size, int chunks);
 void		ft_solve_10(t_list **lst_a, t_list **lst_b, int *size, int chunks);
 void		ft_solve_big(t_list **lst_a, t_list **lst_b, int *size, int chunks);

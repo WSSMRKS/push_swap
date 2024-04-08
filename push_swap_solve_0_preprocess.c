@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/04/08 16:03:28 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/08 16:29:35 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,29 +74,22 @@ int	ft_chunks(int size)
 	return (chunks);
 }
 
-void	ft_push_a(t_list **lst_1, t_list **lst_2, int size_2)
+void	ft_0_top(t_list **lst_a)
 {
-	int		dist;
-	t_list	*tmp;
+	int	dist;
 
-	while (size_2 > 0)
+	dist = ft_find_index(lst_a, 0);
+	while (dist != 0)
 	{
-		tmp = *lst_2;
-		dist = ft_find_index(lst_1, tmp->cont->index);
-		while (dist != 0 && dist != -1000000)
+		if (dist < 0)
 		{
-			if (dist < 0)
-			{
-				ft_rra(lst_1, 0);
-				dist++;
-			}
-			else
-			{
-				ft_ra(lst_1, 0);
-				dist--;
-			}
+			ft_rra(lst_a, 0);
+			dist++;
 		}
-		ft_pa(lst_1, lst_2, 0);
-		size_2--;
+		else
+		{
+			ft_ra(lst_a, 0);
+			dist--;
+		}
 	}
 }

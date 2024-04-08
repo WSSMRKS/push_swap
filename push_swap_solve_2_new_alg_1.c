@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_solve_utils_4.c                          :+:      :+:    :+:   */
+/*   push_swap_solve_new_alg_1.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/04/08 16:20:40 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/08 16:27:31 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,8 @@ int	ft_cheapest(t_list **lst_b)
 	t_list	*tmp;
 	int		price;
 	int		tmp_2;
-	int		aux1 = 0;
-	int		aux2 = 0;
 
 	price = INT_MAX;
-
 	tmp = *lst_b;
 	while (tmp)
 	{
@@ -70,7 +67,6 @@ int	ft_cheapest(t_list **lst_b)
 		if (tmp_2 < price)
 			price = tmp_2;
 		tmp = tmp->next;
-		aux1++;
 	}
 	tmp = *lst_b;
 	while (tmp)
@@ -81,7 +77,6 @@ int	ft_cheapest(t_list **lst_b)
 			return (tmp->cont->dist_b);
 		}
 		tmp = tmp->next;
-		aux2++;
 	}
 	return (INT_MIN);
 }
@@ -129,53 +124,3 @@ int	ft_turn_a(t_list **lst, int dist)
 	}
 	return (turned);
 }
-
-
-
-int	ft_find_target(t_list **lst_a, int index)
-{
-	t_list	*last;
-	t_list	*tmp;
-	int		size;
-	int		i;
-
-	i = 0;
-	size = ft_lstsize(*lst_a);
-	last = ft_lstlast(*lst_a);
-	if ((last->cont->index > index && (*lst_a)->cont->index < last->cont->index
-			&& (*lst_a)->cont->index > index)
-		|| (last->cont->index < index
-			&& (*lst_a)->cont->index < last->cont->index
-			&& (*lst_a)->cont->index < index))
-		return (0);
-	tmp = *lst_a;
-	while (tmp)
-	{
-		if ((!tmp->next && tmp->cont->index > index)
-			|| (!tmp->next && tmp->cont->index < index)
-			|| (tmp->cont->index < index && tmp->next->cont->index > index)
-			|| (tmp->cont->index < index && tmp->next->cont->index < index
-				&& tmp->next->cont->index < tmp->cont->index)
-			|| (tmp->cont->index > index && tmp->next->cont->index > index
-				&& tmp->next->cont->index < tmp->cont->index))
-		{
-			if (i + 1 >= ((float)size / 2) + 1)
-				return (-size + i + 1); // +1 or not??
-			else
-				return (i + 1);
-		}
-		i++;
-		tmp = tmp->next;
-	}
-	return (INT_MIN);
-}
-
-// handling:
-// all values are to the right
-// check for value with the lowest price.
-// lowest price = abs dist_a + abs dist_b < andere
-
-// abs dist_b < bestimmter Wert.
-
-
-

@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/04/08 16:11:15 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/08 16:34:08 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,35 +56,6 @@ void	ft_solve_3_l(t_list **lst_a)
 	{
 		ft_sa(lst_a, 0);
 		ft_rra(lst_a, 0);
-	}
-}
-
-void	ft_solve_3_r(t_list **lst_b)
-{
-	if ((*lst_b)->cont->value > (*lst_b)->next->cont->value
-		&& (*lst_b)->next->cont->value < (*lst_b)->next->next->cont->value)
-	{
-		if ((*lst_b)->cont->value < (*lst_b)->next->next->cont->value)
-		{
-			ft_sb(lst_b, 0);
-			ft_rb(lst_b, 0);
-		}
-		else
-			ft_rrb(lst_b, 0);
-	}
-	else if ((*lst_b)->cont->value < (*lst_b)->next ->cont->value
-		&& (*lst_b)->next->cont->value > (*lst_b)->next->next->cont->value)
-	{
-		if ((*lst_b)->cont->value > (*lst_b)->next->next->cont->value)
-			ft_sb(lst_b, 0);
-		else
-			ft_rb(lst_b, 0);
-	}
-	else if ((*lst_b)->cont->value < (*lst_b)->next->cont->value
-		&& (*lst_b)->next->cont->value < (*lst_b)->next->next->cont->value)
-	{
-		ft_sb(lst_b, 0);
-		ft_rrb(lst_b, 0);
 	}
 }
 

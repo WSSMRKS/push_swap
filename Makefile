@@ -15,9 +15,9 @@ TESTFLAGS = -g3
 COPTIONS = -c
 CC = cc
 # Source Files #
-SRC =			push_swap.c			push_swap_utils.c	push_swap_lst_fncts_1.c	push_swap_lst_fncts_2.c	push_swap_lst_fncts_3.c \
-				push_swap_solve.c	push_swap_solve_utils_1.c	push_swap_solve_utils_2.c	push_swap_solve_utils_3.c			\
-				push_swap_solve_utils_4.c
+SRC =			push_swap.c			push_swap_utils.c				push_swap_lst_fncts_1.c		push_swap_lst_fncts_2.c			push_swap_lst_fncts_3.c			\
+				push_swap_solve.c	push_swap_solve_0_preprocess.c	push_swap_solve_1_push_b.c	push_swap_solve_2_new_alg_1.c	push_swap_solve_2_new_alg_2.c	\
+				push_swap_solve_3_old_alg.c
 MAIN_SRC =
 BONUS_SRC =		push_swap_bonus.c			push_swap_utils.c	push_swap_lst_fncts_1.c	push_swap_lst_fncts_2.c	push_swap_lst_fncts_3.c \
 				push_swap_bonus_utils.c
