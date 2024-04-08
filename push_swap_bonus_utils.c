@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/04/08 17:12:45 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/08 19:39:22 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,18 @@ int	ft_ex_line(t_list **lst_a, t_list **lst_b, char *line)
 
 int	ft_loop_lines(char *line, t_list **lst_a, t_list **lst_b)
 {
+	int	res;
+
+	res = 0;
 	while (line)
 	{
-		if (ft_ex_line(lst_a, lst_b, line) != 0)
-			return (ft_ex_line(lst_a, lst_b, line));
+		res = ft_ex_line(lst_a, lst_b, line);
+		if (res != 0)
+		{
+			if (line)
+				free(line);
+			return (res);
+		}
 		else
 		{
 			free(line);
@@ -55,28 +63,26 @@ int	ft_loop_lines(char *line, t_list **lst_a, t_list **lst_b)
 	return (0);
 }
 
-void	ft_checker(t_list **lst_a, t_list **lst_b)
+void	ft_checker(t_list **lst_a, t_list **lst_b, int *dup_sorted, int *res)
 {
 	char	*line;
-	int		dup_sorted;
-	int		res;
 
-	res = 1;
-	dup_sorted = 0;
-	dup_sorted = ft_dup_sorted(*lst_a);
+	*dup_sorted = ft_dup_sorted(*lst_a);
 	line = ft_get_next_line(0);
-	if (dup_sorted == -1 && line == NULL)
+	if (*dup_sorted == -1 && line == NULL)
 		ft_putstr_fd("Error\n", 2);
-	else if (dup_sorted == 1 && line == NULL)
+	else if (*dup_sorted == 1 && line == NULL)
 		ft_printf("OK\n");
+	else if (*dup_sorted == 0 && line == NULL)
+		ft_printf("KO\n");
 	else if (line)
 	{
-		res = ft_loop_lines(line, lst_a, lst_b);
-		if (*lst_a && ft_dup_sorted(*lst_a) == 1 && !*lst_b && res == 0)
+		*res = ft_loop_lines(line, lst_a, lst_b);
+		if (*lst_a && ft_dup_sorted(*lst_a) == 1 && !*lst_b && *res == 0)
 			ft_printf("OK\n");
-		else if (res == 2)
+		else if (*res == 2)
 			ft_printf("Error\n");
-		else
+		else if (*res == 1 || (*lst_a && ft_dup_sorted(*lst_a) != 1))
 			ft_printf("KO\n");
 	}
 	if (lst_a)
@@ -89,11 +95,15 @@ void	ft_check(int **stack_a, int *size)
 {
 	t_list	*lst_a;
 	t_list	*lst_b;
+	int		dup_sorted;
+	int		res;
 
+	res = 1;
+	dup_sorted = 0;
 	lst_a = NULL;
 	lst_b = NULL;
 	lst_a = ft_fill_lst(stack_a, size);
-	ft_checker(&lst_a, &lst_b);
+	ft_checker(&lst_a, &lst_b, &dup_sorted, &res);
 	ft_free((void **)stack_a, 0);
 	exit(1);
 }
