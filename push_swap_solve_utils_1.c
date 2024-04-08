@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:37:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/04/02 15:18:39 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/08 16:03:28 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,25 +63,14 @@ int	ft_chunks(int size)
 	int	chunks;
 
 	chunks = 1;
-	if (size <= 15)
-		return (chunks);
-	else if (size > 15 && size <= 50)
-		chunks = 3;
-	else if (size > 50 && size < 80)
-		chunks = 5;
-	else if (size > 80 && size <= 200)
-		chunks = 7;
+	if (size <= 200)
+		chunks = 1;
 	else if (size > 200 && size <= 450)
-		chunks = 10;
+		chunks = 3;
 	else if (size > 450 && size <= 950)
-		chunks = 12;
-	else if (size > 950 && size <= 2500)
-		chunks = 17;
-	else
-	{
-		while (size / chunks > 50)
-			chunks++;
-	}
+		chunks = 5;
+	else if (size > 950)
+		chunks = 9;
 	return (chunks);
 }
 

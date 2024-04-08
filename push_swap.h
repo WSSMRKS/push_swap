@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:20:36 by maweiss           #+#    #+#             */
-/*   Updated: 2024/04/08 12:15:02 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/08 16:15:49 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
 
 typedef struct s_cont
 {
-	int	value;
-	int	index;
-	int	chunk;
-	int	target;
 	int	dist_b;
 	int	dist_a;
+	int	index;
+	int	target;
+	int	chunk;
+	int	value;
 }			t_cont;
 
 typedef struct s_list
@@ -72,7 +72,8 @@ void		ft_push_b(t_list **lst_a, t_list **lst_b, int size_a, int chunks);
 void		ft_push_a(t_list **lst_1, t_list **lst_2, int size_2);
 void		ft_0_top(t_list **lst_a);
 int			ft_calc_dist(t_list **lst_a, int index, int *dist_t, int *dist_b);
-int			ft_turn(t_list **lst, int dist);
+int			ft_turn_a(t_list **lst, int dist);
+int			ft_turn_b(t_list **lst, int dist);
 int			ft_cheapest(t_list **lst_b);
 void		ft_dist(t_list **lst_b, int size_b, t_list **lst_a);
 int			ft_finish_b(t_list **lst_a, t_list **lst_b);
@@ -131,6 +132,5 @@ int			ft_putchar_fd_ret(char c, int fd);
 char		*ft_get_next_line(int fd);
 void		ft_putstr_non_printable(char *str, size_t n);
 int			ft_abs(int a);
-
 
 #endif
