@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/04/07 15:26:31 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/08 16:52:01 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	**ft_parse_several(int argc, char **argv)
 		i++;
 		if (valid != 1)
 		{
-			ft_free((void **)stack_a, 0);
+			ft_free((void **)stack_a, i);
 			return (NULL);
 		}
 	}

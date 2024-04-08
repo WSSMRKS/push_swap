@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:19:56 by maweiss           #+#    #+#             */
-/*   Updated: 2024/04/05 12:31:32 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/08 16:54:47 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_free(void **tofree, int index)
 	i = 0;
 	if (index != 0)
 	{
-		while (i <= index)
+		while (i < index)
 		{
 			free((void *)tofree[i]);
 			i++;
