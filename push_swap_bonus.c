@@ -6,7 +6,7 @@
 /*   By: maweiss <maweiss@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:49:01 by maweiss           #+#    #+#             */
-/*   Updated: 2024/04/08 16:54:20 by maweiss          ###   ########.fr       */
+/*   Updated: 2024/04/09 15:38:42 by maweiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,18 @@ int	**ft_parse_several(int argc, char **argv)
 	return (stack_a);
 }
 
+int	ft_protect(char **split, int **stack_a)
+{
+	if (!split || !split[0])
+	{
+		free(stack_a);
+		if (split)
+			free(split);
+		return (-1);
+	}
+	return (1);
+}
+
 int	**ft_parse_one(char *input, int *size)
 {
 	char	**split;
@@ -51,9 +63,9 @@ int	**ft_parse_one(char *input, int *size)
 	if (!stack_a)
 		return (NULL);
 	split = ft_split(input, ' ');
-	if (!split)
+	if (ft_protect(split, stack_a) == -1)
 		return (NULL);
-	while (split[*size])
+	while (split[*size] != NULL)
 	{
 		stack_a[*size] = malloc(sizeof(int));
 		if (stack_a[*size] != NULL)
